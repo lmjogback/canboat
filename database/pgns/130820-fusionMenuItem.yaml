@@ -40,10 +40,36 @@ fields:
   type: UINT32
 - id: flags
   name: Flags
-  type: UINT8
+  type: BITLOOKUP
+  bits: 8
+  lookupBits: FUSION_MENU_ITEM_FLAGS
 - id: lockId
   name: Lock ID
   type: UINT8
 - id: text
   name: Text
   type: STRING_LZ
+notes: |-
+  Bit 1 (0x02) is set for the selected Bluetooth device and while the Bluetooth Discoverable menu item is enabled.
+  The meaning of the remaining flag bits is unknown.
+samples:
+- raw: "2026-09-19T06:43:05.684240Z,7,130820,12,255,25,a3,99,11,80,06,00,00,00,00,89,01,0c,44,69,73,63,6f,76,65,72,61,62,6c,65,00"  # from fusion-ms-ra70n-bluetooth-menu.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    messageId: "Menu Item"
+    sourceId: 6
+    itemIndex: 0
+    flags: ["bit 0", "bit 3", "bit 7"]
+    lockId: 1
+    text: "Discoverable"
+- raw: "2026-09-19T06:43:06.941235Z,7,130820,12,255,25,a3,99,11,80,06,00,00,00,00,8b,01,0c,44,69,73,63,6f,76,65,72,61,62,6c,65,00"  # from fusion-ms-ra70n-bluetooth-menu.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    messageId: "Menu Item"
+    sourceId: 6
+    itemIndex: 0
+    flags: ["bit 0", "Selected", "bit 3", "bit 7"]
+    lockId: 1
+    text: "Discoverable"

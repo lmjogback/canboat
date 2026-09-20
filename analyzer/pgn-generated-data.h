@@ -8462,7 +8462,7 @@ Pgn pgnList[] = {
       {.name = "Message ID", .camelName = "messageId", .fieldType = "LOOKUP", .size = 16, .resolution = 1.0, .hasMatchValue = true, .matchValue = 32785, .description = "Menu Item", .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupFUSION_STATUS_MESSAGE_ID, .lookup.name = "FUSION_STATUS_MESSAGE_ID", .partOfPrimaryKey = true},
       {.name = "Source ID", .camelName = "sourceId", .fieldType = "UINT8", .resolution = 1.0, .partOfPrimaryKey = true},
       {.name = "Item Index", .camelName = "itemIndex", .fieldType = "UINT32", .resolution = 1.0},
-      {.name = "Flags", .camelName = "flags", .fieldType = "UINT8", .resolution = 1.0},
+      {.name = "Flags", .camelName = "flags", .fieldType = "BITLOOKUP", .size = 8, .resolution = 1.0, .lookup.type = LOOKUP_TYPE_BIT, LOOKUP_BIT_MEMBER = lookupFUSION_MENU_ITEM_FLAGS, .lookup.name = "FUSION_MENU_ITEM_FLAGS"},
       {.name = "Lock ID", .camelName = "lockId", .fieldType = "UINT8", .resolution = 1.0},
       {.name = "Text", .camelName = "text", .fieldType = "STRING_LZ"}
      },

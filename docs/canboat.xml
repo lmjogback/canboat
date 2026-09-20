@@ -1242,6 +1242,7 @@ limitations under the License.
     <LookupEnumeration Name="FUSION_MENU_ACTION" MaxValue="255">
       <EnumPair Value="1" Name="Open" />
       <EnumPair Value="2" Name="Select" />
+      <EnumPair Value="3" Name="Update" />
       <EnumPair Value="4" Name="Close" />
     </LookupEnumeration>
     <LookupEnumeration Name="FUSION_MESSAGE_ID" MaxValue="65535">
@@ -4340,6 +4341,9 @@ limitations under the License.
       <BitPair Bit="3" Name="Baseline Antenna 4-1" />
       <BitPair Bit="4" Name="Baseline Antenna 1-3" />
       <BitPair Bit="5" Name="Baseline Antenna 2-4" />
+    </LookupBitEnumeration>
+    <LookupBitEnumeration Name="FUSION_MENU_ITEM_FLAGS" MaxValue="7">
+      <BitPair Bit="1" Name="Selected" />
     </LookupBitEnumeration>
     <LookupBitEnumeration Name="SIMNET_ALERT_BITFIELD" MaxValue="63">
       <BitPair Bit="0" Name="No GPS fix" />
@@ -69496,13 +69500,10 @@ The Default update rate of this PGN is autonomous, as it is dependent upon notif
           <BitOffset>72</BitOffset>
           <BitStart>0</BitStart>
           <Resolution>1</Resolution>
-          <Signed>false</Signed>
           <RangeMin>0</RangeMin>
-          <RangeMax>252</RangeMax>
-          <UnknownValue>255</UnknownValue>
-          <OutOfRangeValue>254</OutOfRangeValue>
-          <ReservedValue>253</ReservedValue>
-          <FieldType>NUMBER</FieldType>
+          <RangeMax>255</RangeMax>
+          <FieldType>BITLOOKUP</FieldType>
+          <LookupBitEnumeration>FUSION_MENU_ITEM_FLAGS</LookupBitEnumeration>
         </Field>
         <Field>
           <Order>8</Order>
