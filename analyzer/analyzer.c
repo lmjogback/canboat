@@ -112,6 +112,7 @@ typedef struct
 TpSlot tpSlotBuffer[ISO_TP_SLOTS];
 
 bool       showRaw       = false;
+bool       showCoalescedRaw = false;
 bool       showData      = false;
 bool       showBytes     = false;
 bool       showAllBytes  = false;
@@ -154,6 +155,7 @@ static bool            printField(const Field   *field,
                                   size_t        *bits,
                                   bool           allowKey);
 static void            printCanRaw(const RawMessage *msg);
+static void            printCanRawData(const RawMessage *msg, const uint8_t *data, size_t len);
 static void            showBuffers(void);
 static unsigned int    getMessageByteCount(const char *const msg);
 
@@ -201,7 +203,8 @@ static void usage(char **argv, char **av)
   printf("\n");
   printf("     -version          Print the version of the program and quit\n");
   printf("\nThe following options are used to debug the analyzer:\n");
-  printf("     -raw              Print the PGN in a format suitable to be fed to analyzer again (in standard raw format)\n");
+  printf("     -raw              Print input messages in standard raw format\n");
+  printf("     -coalesced        Print standard raw format with FAST and ISO-TP messages reassembled\n");
   printf("     -data             Print the PGN three times: in hex, ascii and analyzed\n");
   printf("     -debug            Print raw value per field\n");
   printf("     -debugdata        Print raw value per pgn\n");
@@ -241,6 +244,10 @@ int main(int argc, char **argv)
     else if (strcasecmp(av[1], "-raw") == 0)
     {
       showRaw = true;
+    }
+    else if (strcasecmp(av[1], "-coalesced") == 0)
+    {
+      showCoalescedRaw = true;
     }
     else if (strcasecmp(av[1], "-debug") == 0)
     {
@@ -547,7 +554,10 @@ int main(int argc, char **argv)
       if (isMsgAllowed(&m))
       {
         printCanFormat(&m);
-        printCanRaw(&m);
+        if (!showCoalescedRaw)
+        {
+          printCanRaw(&m);
+        }
       }
     }
     else
@@ -706,11 +716,22 @@ static bool isTargetPgnAllowed(uint32_t pgn)
   return false;
 }
 
+static void printCanRawData(const RawMessage *msg, const uint8_t *data, size_t len)
+{
+  char ts[DATE_LENGTH];
+
+  normalizeTimestamp(msg->timestamp, ts, sizeof(ts));
+  fprintf(stdout, "%s,%u,%u,%u,%u,%zu", ts, msg->prio, msg->pgn, msg->src, msg->dst, len);
+  for (size_t i = 0; i < len; i++)
+  {
+    fprintf(stdout, ",%02x", data[i]);
+  }
+  putc('\n', stdout);
+}
+
 static void printCanRaw(const RawMessage *msg)
 {
-  size_t i;
-  FILE  *f = stdout;
-  char   ts[DATE_LENGTH];
+  FILE *f = stdout;
 
   if (showJson)
   {
@@ -719,9 +740,11 @@ static void printCanRaw(const RawMessage *msg)
 
   if (showRaw && (!onlyPgn || onlyPgn == msg->pgn))
   {
+    char ts[DATE_LENGTH];
+
     normalizeTimestamp(msg->timestamp, ts, sizeof(ts));
     fprintf(f, "%s,%u,%u,%u,%u,%u", ts, msg->prio, msg->pgn, msg->src, msg->dst, msg->len);
-    for (i = 0; i < msg->len; i++)
+    for (size_t i = 0; i < msg->len; i++)
     {
       fprintf(f, ",%02x", msg->data[i]);
     }
@@ -861,7 +884,14 @@ static void printCanFormat(RawMessage *msg)
   if (multiPackets == MULTIPACKETS_COALESCED || !pgn || pgn->type != PACKET_FAST || msg->len > 8)
   {
     // No reassembly needed
-    printPgn(msg, msg->data, msg->len, showData, showJson);
+    if (showCoalescedRaw)
+    {
+      printCanRawData(msg, msg->data, msg->len);
+    }
+    else
+    {
+      printPgn(msg, msg->data, msg->len, showData, showJson);
+    }
     return;
   }
 
@@ -981,7 +1011,14 @@ static void printCanFormat(RawMessage *msg)
     if (p->frames == p->allFrames)
     {
       // Received all data
-      printPgn(msg, p->data, p->size, showData, showJson);
+      if (showCoalescedRaw)
+      {
+        printCanRawData(msg, p->data, p->size);
+      }
+      else
+      {
+        printPgn(msg, p->data, p->size, showData, showJson);
+      }
       p->used   = false;
       p->frames = 0;
     }
@@ -1194,7 +1231,14 @@ static void handleIsoTpDt(const RawMessage *msg)
     synthesized.src  = p->src;
     synthesized.len  = 0; // unused here; printPgn takes data/length as separate arguments
 
-    printPgn(&synthesized, p->data, (int) p->totalSize, showData, showJson);
+    if (showCoalescedRaw)
+    {
+      printCanRawData(&synthesized, p->data, p->totalSize);
+    }
+    else
+    {
+      printPgn(&synthesized, p->data, (int) p->totalSize, showData, showJson);
+    }
   }
 }
 
