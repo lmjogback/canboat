@@ -1,0 +1,55 @@
+pgn: 126720
+id: fusionFactoryReset
+description: 'Fusion: Factory Reset'
+type: Fast
+priority: 7
+variantOrder: 70
+fields:
+- id: manufacturerCode
+  name: Manufacturer Code
+  type: LOOKUP
+  bits: 11
+  description: Fusion Electronics
+  match: 419
+  lookup: MANUFACTURER_CODE
+  primaryKey: true
+- id: reserved
+  name: Reserved
+  type: RESERVED
+  bits: 2
+- id: industryCode
+  name: Industry Code
+  type: LOOKUP
+  bits: 3
+  description: Marine Industry
+  match: 4
+  lookup: INDUSTRY_CODE
+  primaryKey: true
+- id: proprietaryId
+  name: Proprietary ID
+  type: LOOKUP
+  bits: 16
+  match: 33
+  lookup: FUSION_MESSAGE_ID
+  primaryKey: true
+notes: |-
+  Requests a factory reset of the addressed stereo. The captured MS-NRX300
+  command to an MS-RA70N has a four-byte reassembled payload: the two-byte
+  manufacturer/industry prefix followed by command 0x0021, little-endian.
+  There are no additional command parameters. Fast-packet framing and CAN
+  padding are not part of the command payload.
+
+  The request alone does not establish the exact settings reset or successful
+  completion. No dedicated acknowledgement is identified by this definition;
+  subsequent ordinary status messages must not be treated as proof of one.
+  This command is distinct from Sirius Factory Reset (0x0026).
+
+  Evidence: samples/fusion-factory-reset.raw, from
+  fusion-nrx300-update-factoryreset.log, line 126 (2026-09-19).
+samples:
+- raw:
+  - 2026-09-19-10:06:57.324,7,126720,33,12,8,40,04,a3,99,21,00,ff,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    proprietaryId: Send Factory Reset Command

@@ -1,0 +1,8 @@
+# format=PLAIN
+# Fusion MS-NRX300 to MS-RA70N Factory Reset request, 2026-09-19.
+# Source: lmjogback/signalk-work at 6d71a17248dd6a9ecc6998b23c4b7cef7b7e8881,
+# projects/fusion/captures/fusion-nrx300-update-factoryreset.log, line 126.
+# Original: (1789812417.324024) can0 1DEF0C21#4004A3992100FFFF
+# Original physical frame; timestamp follows the archived RAW conversion.
+# Fast-packet header and padding are retained; application payload is a3 99 21 00.
+2026-09-19-10:06:57.324,7,126720,33,12,8,40,04,a3,99,21,00,ff,ff
