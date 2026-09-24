@@ -4360,6 +4360,9 @@ limitations under the License.
     </LookupBitEnumeration>
     <LookupBitEnumeration Name="FUSION_MENU_ITEM_FLAGS" MaxValue="7">
       <BitPair Bit="1" Name="Selected" />
+      <BitPair Bit="3" Name="Translated" />
+      <BitPair Bit="6" Name="Submenu" />
+      <BitPair Bit="7" Name="Tick Item" />
     </LookupBitEnumeration>
     <LookupBitEnumeration Name="SIMNET_ALERT_BITFIELD" MaxValue="63">
       <BitPair Bit="0" Name="No GPS fix" />

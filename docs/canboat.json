@@ -5423,7 +5423,10 @@
         "Name":"FUSION_MENU_ITEM_FLAGS",
         "MaxValue":7,
         "EnumBitValues":[
-          {"Name":"Selected", "Bit":1}
+          {"Name":"Selected", "Bit":1},
+          {"Name":"Translated", "Bit":3},
+          {"Name":"Submenu", "Bit":6},
+          {"Name":"Tick Item", "Bit":7}
         ]
       },
       {

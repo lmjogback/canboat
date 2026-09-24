@@ -3,3 +3,6 @@ kind: bit
 bits: 8
 values:
   1: Selected
+  3: Translated
+  6: Submenu
+  7: Tick Item
