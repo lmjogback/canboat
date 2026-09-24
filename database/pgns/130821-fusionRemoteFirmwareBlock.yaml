@@ -1,0 +1,493 @@
+pgn: 130821
+id: fusionRemoteFirmwareBlock
+description: 'Fusion: Remote Firmware Block'
+type: Fast
+priority: 7
+variantOrder: 5
+missing:
+- Resolution
+fields:
+- id: manufacturerCode
+  name: Manufacturer Code
+  type: LOOKUP
+  bits: 11
+  match: 419
+  lookup: MANUFACTURER_CODE
+  primaryKey: true
+- id: reserved
+  name: Reserved
+  type: RESERVED
+  bits: 2
+- id: industryCode
+  name: Industry Code
+  type: LOOKUP
+  bits: 3
+  match: 4
+  lookup: INDUSTRY_CODE
+  primaryKey: true
+- id: firmwareVersion
+  name: Firmware Version
+  type: UINT32
+  description: Raw little-endian version word; the captured NRX300 1.02.78 image uses 10278. Encoding
+    for other versions or devices is not established.
+  specialValues: 0
+- id: imageCrc
+  name: Image CRC
+  type: UINT16
+  description: CRC of the complete firmware image, not just this block. Little-endian; reflected polynomial
+    0x8408, initial 0xffff, no final XOR in the captured transfer.
+  specialValues: 0
+- id: blockCount
+  name: Block Count
+  type: UINT16
+  description: Total number of blocks advertised by the sender; 1022 in the captured transfer. Do not
+    derive this field from a presumed image-size formula.
+  specialValues: 0
+- id: blockIndex
+  name: Block Index
+  type: UINT16
+  description: Zero-based block index, from 0 through 1021 in the captured transfer.
+  specialValues: 0
+- id: byteOffset
+  name: Byte Offset
+  type: UINT32
+  description: Offset of the first data byte within the complete firmware image.
+  specialValues: 0
+- id: dataLength
+  name: Data Length
+  type: UINT16
+  description: 'Number of following data bytes: 128 in the captured full blocks and 60 in the final block.
+    Excludes fast-packet framing and padding.'
+  specialValues: 0
+- repeat:
+    countField: dataLength
+    fields:
+    - id: dataByte
+      name: Data Byte
+      type: BINARY
+      bits: 8
+notes: |-
+  Transfers firmware image blocks from the stereo to an MS-NRX300 remote.
+  Unlike the Fusion update command/status PGNs, there is no separate message
+  ID after the manufacturer/industry prefix. The header is 18 bytes and the
+  reassembled payload length is 18 plus Data Length.
+
+  The MS-RA70N/MS-NRX300 capture contains 1022 consecutive blocks, indexes
+  0 through 1021, with byte offsets increasing by 128. The first 1021 blocks
+  contain 128 data bytes each; the final block contains 60. Reassembly yields
+  130748 bytes, version word 10278 and image CRC 0x4ef0. The whole-image CRC
+  was independently recomputed from the captured bytes. The version word is
+  kept numeric rather than assuming a general version-string encoding.
+
+  Data bytes repeat Data Length times. CAN fast-packet headers and padding
+  are not firmware data. Header integers are retained as raw unsigned values
+  without assumed NMEA numeric sentinels. Other image sizes, version encodings
+  and model-specific boundary behavior are not established by this capture.
+  Decoding a block does not verify the complete image or prove installation
+  or subsequent boot success.
+
+  The associated update request is PGN 126720 command 0x0010, target 2;
+  progress/state is PGN 130820 message 0x8016. Evidence:
+  samples/fusion-firmware-transfer.raw, first/middle/final blocks from
+  fusion-nrx300-updatenrx.log (2026-09-19).
+samples:
+- raw:
+  - 2026-09-19-06:49:02.140,7,130821,12,255,8,00,92,a3,99,26,28,00,00
+  - 2026-09-19-06:49:02.141,7,130821,12,255,8,01,f0,4e,fe,03,00,00,00
+  - 2026-09-19-06:49:02.141,7,130821,12,255,8,02,00,00,00,80,00,00,c0
+  - 2026-09-19-06:49:02.142,7,130821,12,255,8,03,00,20,65,19,00,08,61
+  - 2026-09-19-06:49:02.142,7,130821,12,255,8,04,19,00,08,f1,95,00,08
+  - 2026-09-19-06:49:02.143,7,130821,12,255,8,05,0b,96,00,08,07,96,00
+  - 2026-09-19-06:49:02.143,7,130821,12,255,8,06,08,09,96,00,08,00,00
+  - 2026-09-19-06:49:02.144,7,130821,12,255,8,07,00,00,00,00,00,00,00
+  - 2026-09-19-06:49:02.145,7,130821,12,255,8,08,00,00,00,00,00,00,00
+  - 2026-09-19-06:49:02.146,7,130821,12,255,8,09,61,19,00,08,61,19,00
+  - 2026-09-19-06:49:02.146,7,130821,12,255,8,0a,08,00,00,00,00,61,19
+  - 2026-09-19-06:49:02.147,7,130821,12,255,8,0b,00,08,0d,96,00,08,61
+  - 2026-09-19-06:49:02.147,7,130821,12,255,8,0c,19,00,08,61,19,00,08
+  - 2026-09-19-06:49:02.148,7,130821,12,255,8,0d,61,19,00,08,61,19,00
+  - 2026-09-19-06:49:02.149,7,130821,12,255,8,0e,08,61,19,00,08,61,19
+  - 2026-09-19-06:49:02.149,7,130821,12,255,8,0f,00,08,61,19,00,08,61
+  - 2026-09-19-06:49:02.150,7,130821,12,255,8,10,19,00,08,61,19,00,08
+  - 2026-09-19-06:49:02.150,7,130821,12,255,8,11,61,19,00,08,61,19,00
+  - 2026-09-19-06:49:02.151,7,130821,12,255,8,12,08,61,19,00,08,ad,c8
+  - 2026-09-19-06:49:02.151,7,130821,12,255,8,13,00,08,61,19,00,08,4d
+  - 2026-09-19-06:49:02.152,7,130821,12,255,8,14,c8,00,08,61,19,00,08
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    firmwareVersion: 10278
+    imageCrc: 20208
+    blockCount: 1022
+    blockIndex: 0
+    byteOffset: 0
+    dataLength: 128
+    dataByte: '0x00'
+    dataByte.2: '0xc0'
+    dataByte.3: '0x00'
+    dataByte.4: '0x20'
+    dataByte.5: '0x65'
+    dataByte.6: '0x19'
+    dataByte.7: '0x00'
+    dataByte.8: '0x08'
+    dataByte.9: '0x61'
+    dataByte.10: '0x19'
+    dataByte.11: '0x00'
+    dataByte.12: '0x08'
+    dataByte.13: '0xf1'
+    dataByte.14: '0x95'
+    dataByte.15: '0x00'
+    dataByte.16: '0x08'
+    dataByte.17: '0x0b'
+    dataByte.18: '0x96'
+    dataByte.19: '0x00'
+    dataByte.20: '0x08'
+    dataByte.21: '0x07'
+    dataByte.22: '0x96'
+    dataByte.23: '0x00'
+    dataByte.24: '0x08'
+    dataByte.25: '0x09'
+    dataByte.26: '0x96'
+    dataByte.27: '0x00'
+    dataByte.28: '0x08'
+    dataByte.29: '0x00'
+    dataByte.30: '0x00'
+    dataByte.31: '0x00'
+    dataByte.32: '0x00'
+    dataByte.33: '0x00'
+    dataByte.34: '0x00'
+    dataByte.35: '0x00'
+    dataByte.36: '0x00'
+    dataByte.37: '0x00'
+    dataByte.38: '0x00'
+    dataByte.39: '0x00'
+    dataByte.40: '0x00'
+    dataByte.41: '0x00'
+    dataByte.42: '0x00'
+    dataByte.43: '0x00'
+    dataByte.44: '0x00'
+    dataByte.45: '0x61'
+    dataByte.46: '0x19'
+    dataByte.47: '0x00'
+    dataByte.48: '0x08'
+    dataByte.49: '0x61'
+    dataByte.50: '0x19'
+    dataByte.51: '0x00'
+    dataByte.52: '0x08'
+    dataByte.53: '0x00'
+    dataByte.54: '0x00'
+    dataByte.55: '0x00'
+    dataByte.56: '0x00'
+    dataByte.57: '0x61'
+    dataByte.58: '0x19'
+    dataByte.59: '0x00'
+    dataByte.60: '0x08'
+    dataByte.61: '0x0d'
+    dataByte.62: '0x96'
+    dataByte.63: '0x00'
+    dataByte.64: '0x08'
+    dataByte.65: '0x61'
+    dataByte.66: '0x19'
+    dataByte.67: '0x00'
+    dataByte.68: '0x08'
+    dataByte.69: '0x61'
+    dataByte.70: '0x19'
+    dataByte.71: '0x00'
+    dataByte.72: '0x08'
+    dataByte.73: '0x61'
+    dataByte.74: '0x19'
+    dataByte.75: '0x00'
+    dataByte.76: '0x08'
+    dataByte.77: '0x61'
+    dataByte.78: '0x19'
+    dataByte.79: '0x00'
+    dataByte.80: '0x08'
+    dataByte.81: '0x61'
+    dataByte.82: '0x19'
+    dataByte.83: '0x00'
+    dataByte.84: '0x08'
+    dataByte.85: '0x61'
+    dataByte.86: '0x19'
+    dataByte.87: '0x00'
+    dataByte.88: '0x08'
+    dataByte.89: '0x61'
+    dataByte.90: '0x19'
+    dataByte.91: '0x00'
+    dataByte.92: '0x08'
+    dataByte.93: '0x61'
+    dataByte.94: '0x19'
+    dataByte.95: '0x00'
+    dataByte.96: '0x08'
+    dataByte.97: '0x61'
+    dataByte.98: '0x19'
+    dataByte.99: '0x00'
+    dataByte.100: '0x08'
+    dataByte.101: '0x61'
+    dataByte.102: '0x19'
+    dataByte.103: '0x00'
+    dataByte.104: '0x08'
+    dataByte.105: '0x61'
+    dataByte.106: '0x19'
+    dataByte.107: '0x00'
+    dataByte.108: '0x08'
+    dataByte.109: '0x61'
+    dataByte.110: '0x19'
+    dataByte.111: '0x00'
+    dataByte.112: '0x08'
+    dataByte.113: '0xad'
+    dataByte.114: '0xc8'
+    dataByte.115: '0x00'
+    dataByte.116: '0x08'
+    dataByte.117: '0x61'
+    dataByte.118: '0x19'
+    dataByte.119: '0x00'
+    dataByte.120: '0x08'
+    dataByte.121: '0x4d'
+    dataByte.122: '0xc8'
+    dataByte.123: '0x00'
+    dataByte.124: '0x08'
+    dataByte.125: '0x61'
+    dataByte.126: '0x19'
+    dataByte.127: '0x00'
+    dataByte.128: '0x08'
+- raw:
+  - 2026-09-19-06:50:32.839,7,130821,12,255,8,e0,92,a3,99,26,28,00,00
+  - 2026-09-19-06:50:32.839,7,130821,12,255,8,e1,f0,4e,fe,03,ff,01,80
+  - 2026-09-19-06:50:32.840,7,130821,12,255,8,e2,ff,00,00,80,00,bd,e8
+  - 2026-09-19-06:50:32.840,7,130821,12,255,8,e3,f0,81,9d,8c,00,20,dd
+  - 2026-09-19-06:50:32.841,7,130821,12,255,8,e4,bf,01,08,d5,d0,01,08
+  - 2026-09-19-06:50:32.842,7,130821,12,255,8,e5,5a,a2,00,20,20,a2,00
+  - 2026-09-19-06:50:32.843,7,130821,12,255,8,e6,20,9c,a2,00,20,28,a2
+  - 2026-09-19-06:50:32.843,7,130821,12,255,8,e7,00,20,d9,fe,00,08,2d
+  - 2026-09-19-06:50:32.844,7,130821,12,255,8,e8,e9,f0,41,fc,f7,2e,f9
+  - 2026-09-19-06:50:32.844,7,130821,12,255,8,e9,05,46,48,27,df,f8,e8
+  - 2026-09-19-06:50:32.845,7,130821,12,255,8,ea,80,30,4c,98,f8,00,30
+  - 2026-09-19-06:50:32.846,7,130821,12,255,8,eb,a4,f1,98,01,23,44,13
+  - 2026-09-19-06:50:32.846,7,130821,12,255,8,ec,f8,9f,2c,13,f8,9e,3c
+  - 2026-09-19-06:50:32.847,7,130821,12,255,8,ed,2c,4e,9b,1a,db,b2,0a
+  - 2026-09-19-06:50:32.847,7,130821,12,255,8,ee,44,00,28,0c,bf,03,21
+  - 2026-09-19-06:50:32.848,7,130821,12,255,8,ef,02,21,00,20,f5,f7,65
+  - 2026-09-19-06:50:32.848,7,130821,12,255,8,f0,f9,98,f8,00,10,27,4b
+  - 2026-09-19-06:50:32.849,7,130821,12,255,8,f1,01,2d,5a,5c,0b,44,5b
+  - 2026-09-19-06:50:32.849,7,130821,12,255,8,f2,78,a4,f1,80,01,a3,eb
+  - 2026-09-19-06:50:32.850,7,130821,12,255,8,f3,02,03,db,b2,0a,44,4f
+  - 2026-09-19-06:50:32.851,7,130821,12,255,8,f4,f0,01,00,0c,bf,03,21
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    firmwareVersion: 10278
+    imageCrc: 20208
+    blockCount: 1022
+    blockIndex: 511
+    byteOffset: 65408
+    dataLength: 128
+    dataByte: '0xbd'
+    dataByte.2: '0xe8'
+    dataByte.3: '0xf0'
+    dataByte.4: '0x81'
+    dataByte.5: '0x9d'
+    dataByte.6: '0x8c'
+    dataByte.7: '0x00'
+    dataByte.8: '0x20'
+    dataByte.9: '0xdd'
+    dataByte.10: '0xbf'
+    dataByte.11: '0x01'
+    dataByte.12: '0x08'
+    dataByte.13: '0xd5'
+    dataByte.14: '0xd0'
+    dataByte.15: '0x01'
+    dataByte.16: '0x08'
+    dataByte.17: '0x5a'
+    dataByte.18: '0xa2'
+    dataByte.19: '0x00'
+    dataByte.20: '0x20'
+    dataByte.21: '0x20'
+    dataByte.22: '0xa2'
+    dataByte.23: '0x00'
+    dataByte.24: '0x20'
+    dataByte.25: '0x9c'
+    dataByte.26: '0xa2'
+    dataByte.27: '0x00'
+    dataByte.28: '0x20'
+    dataByte.29: '0x28'
+    dataByte.30: '0xa2'
+    dataByte.31: '0x00'
+    dataByte.32: '0x20'
+    dataByte.33: '0xd9'
+    dataByte.34: '0xfe'
+    dataByte.35: '0x00'
+    dataByte.36: '0x08'
+    dataByte.37: '0x2d'
+    dataByte.38: '0xe9'
+    dataByte.39: '0xf0'
+    dataByte.40: '0x41'
+    dataByte.41: '0xfc'
+    dataByte.42: '0xf7'
+    dataByte.43: '0x2e'
+    dataByte.44: '0xf9'
+    dataByte.45: '0x05'
+    dataByte.46: '0x46'
+    dataByte.47: '0x48'
+    dataByte.48: '0x27'
+    dataByte.49: '0xdf'
+    dataByte.50: '0xf8'
+    dataByte.51: '0xe8'
+    dataByte.52: '0x80'
+    dataByte.53: '0x30'
+    dataByte.54: '0x4c'
+    dataByte.55: '0x98'
+    dataByte.56: '0xf8'
+    dataByte.57: '0x00'
+    dataByte.58: '0x30'
+    dataByte.59: '0xa4'
+    dataByte.60: '0xf1'
+    dataByte.61: '0x98'
+    dataByte.62: '0x01'
+    dataByte.63: '0x23'
+    dataByte.64: '0x44'
+    dataByte.65: '0x13'
+    dataByte.66: '0xf8'
+    dataByte.67: '0x9f'
+    dataByte.68: '0x2c'
+    dataByte.69: '0x13'
+    dataByte.70: '0xf8'
+    dataByte.71: '0x9e'
+    dataByte.72: '0x3c'
+    dataByte.73: '0x2c'
+    dataByte.74: '0x4e'
+    dataByte.75: '0x9b'
+    dataByte.76: '0x1a'
+    dataByte.77: '0xdb'
+    dataByte.78: '0xb2'
+    dataByte.79: '0x0a'
+    dataByte.80: '0x44'
+    dataByte.81: '0x00'
+    dataByte.82: '0x28'
+    dataByte.83: '0x0c'
+    dataByte.84: '0xbf'
+    dataByte.85: '0x03'
+    dataByte.86: '0x21'
+    dataByte.87: '0x02'
+    dataByte.88: '0x21'
+    dataByte.89: '0x00'
+    dataByte.90: '0x20'
+    dataByte.91: '0xf5'
+    dataByte.92: '0xf7'
+    dataByte.93: '0x65'
+    dataByte.94: '0xf9'
+    dataByte.95: '0x98'
+    dataByte.96: '0xf8'
+    dataByte.97: '0x00'
+    dataByte.98: '0x10'
+    dataByte.99: '0x27'
+    dataByte.100: '0x4b'
+    dataByte.101: '0x01'
+    dataByte.102: '0x2d'
+    dataByte.103: '0x5a'
+    dataByte.104: '0x5c'
+    dataByte.105: '0x0b'
+    dataByte.106: '0x44'
+    dataByte.107: '0x5b'
+    dataByte.108: '0x78'
+    dataByte.109: '0xa4'
+    dataByte.110: '0xf1'
+    dataByte.111: '0x80'
+    dataByte.112: '0x01'
+    dataByte.113: '0xa3'
+    dataByte.114: '0xeb'
+    dataByte.115: '0x02'
+    dataByte.116: '0x03'
+    dataByte.117: '0xdb'
+    dataByte.118: '0xb2'
+    dataByte.119: '0x0a'
+    dataByte.120: '0x44'
+    dataByte.121: '0x4f'
+    dataByte.122: '0xf0'
+    dataByte.123: '0x01'
+    dataByte.124: '0x00'
+    dataByte.125: '0x0c'
+    dataByte.126: '0xbf'
+    dataByte.127: '0x03'
+    dataByte.128: '0x21'
+- raw:
+  - 2026-09-19-06:51:58.518,7,130821,12,255,8,a0,4e,a3,99,26,28,00,00
+  - 2026-09-19-06:51:58.519,7,130821,12,255,8,a1,f0,4e,fe,03,fd,03,80
+  - 2026-09-19-06:51:58.519,7,130821,12,255,8,a2,fe,01,00,3c,00,00,00
+  - 2026-09-19-06:51:58.520,7,130821,12,255,8,a3,00,00,00,00,00,00,00
+  - 2026-09-19-06:51:58.520,7,130821,12,255,8,a4,00,00,00,00,00,00,00
+  - 2026-09-19-06:51:58.521,7,130821,12,255,8,a5,00,00,00,00,00,00,00
+  - 2026-09-19-06:51:58.521,7,130821,12,255,8,a6,00,00,00,41,53,43,49
+  - 2026-09-19-06:51:58.522,7,130821,12,255,8,a7,49,00,00,00,00,00,00
+  - 2026-09-19-06:51:58.523,7,130821,12,255,8,a8,00,00,00,00,00,00,00
+  - 2026-09-19-06:51:58.523,7,130821,12,255,8,a9,00,00,00,00,00,00,00
+  - 2026-09-19-06:51:58.524,7,130821,12,255,8,aa,00,00,00,00,00,00,00
+  - 2026-09-19-06:51:58.524,7,130821,12,255,8,ab,00,00,ff,ff,ff,ff,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    firmwareVersion: 10278
+    imageCrc: 20208
+    blockCount: 1022
+    blockIndex: 1021
+    byteOffset: 130688
+    dataLength: 60
+    dataByte: '0x00'
+    dataByte.2: '0x00'
+    dataByte.3: '0x00'
+    dataByte.4: '0x00'
+    dataByte.5: '0x00'
+    dataByte.6: '0x00'
+    dataByte.7: '0x00'
+    dataByte.8: '0x00'
+    dataByte.9: '0x00'
+    dataByte.10: '0x00'
+    dataByte.11: '0x00'
+    dataByte.12: '0x00'
+    dataByte.13: '0x00'
+    dataByte.14: '0x00'
+    dataByte.15: '0x00'
+    dataByte.16: '0x00'
+    dataByte.17: '0x00'
+    dataByte.18: '0x00'
+    dataByte.19: '0x00'
+    dataByte.20: '0x00'
+    dataByte.21: '0x00'
+    dataByte.22: '0x00'
+    dataByte.23: '0x00'
+    dataByte.24: '0x00'
+    dataByte.25: '0x00'
+    dataByte.26: '0x00'
+    dataByte.27: '0x41'
+    dataByte.28: '0x53'
+    dataByte.29: '0x43'
+    dataByte.30: '0x49'
+    dataByte.31: '0x49'
+    dataByte.32: '0x00'
+    dataByte.33: '0x00'
+    dataByte.34: '0x00'
+    dataByte.35: '0x00'
+    dataByte.36: '0x00'
+    dataByte.37: '0x00'
+    dataByte.38: '0x00'
+    dataByte.39: '0x00'
+    dataByte.40: '0x00'
+    dataByte.41: '0x00'
+    dataByte.42: '0x00'
+    dataByte.43: '0x00'
+    dataByte.44: '0x00'
+    dataByte.45: '0x00'
+    dataByte.46: '0x00'
+    dataByte.47: '0x00'
+    dataByte.48: '0x00'
+    dataByte.49: '0x00'
+    dataByte.50: '0x00'
+    dataByte.51: '0x00'
+    dataByte.52: '0x00'
+    dataByte.53: '0x00'
+    dataByte.54: '0x00'
+    dataByte.55: '0x00'
+    dataByte.56: '0x00'
+    dataByte.57: '0x00'
+    dataByte.58: '0x00'
+    dataByte.59: '0x00'
+    dataByte.60: '0x00'

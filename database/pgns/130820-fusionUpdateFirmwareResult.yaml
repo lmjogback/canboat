@@ -1,0 +1,131 @@
+pgn: 130820
+id: fusionUpdateFirmwareResult
+description: 'Fusion: Update Firmware Result'
+type: Fast
+priority: 7
+variantOrder: 72
+fields:
+- id: manufacturerCode
+  name: Manufacturer Code
+  type: LOOKUP
+  bits: 11
+  description: Fusion Electronics
+  match: 419
+  lookup: MANUFACTURER_CODE
+- id: reserved
+  name: Reserved
+  type: RESERVED
+  bits: 2
+- id: industryCode
+  name: Industry Code
+  type: LOOKUP
+  bits: 3
+  description: Marine Industry
+  match: 4
+  lookup: INDUSTRY_CODE
+- id: messageId
+  name: Message ID
+  type: LOOKUP
+  bits: 16
+  description: Update Firmware Result
+  match: 32790
+  lookup: FUSION_STATUS_MESSAGE_ID
+  primaryKey: true
+- id: updateTarget
+  name: Update Target
+  type: LOOKUP
+  bits: 8
+  lookup: FUSION_UPDATE_TARGET
+  description: Update destination, not a firmware-container component identifier. Other values are model-dependent.
+  specialValues: 0
+- id: updateState
+  name: Update State
+  type: LOOKUP
+  bits: 8
+  lookup: FUSION_UPDATE_STATE
+  specialValues: 0
+- id: progress
+  name: Progress
+  type: UINT8
+  description: Nominal percentage/staged progress indicator. Remote and DAB transfer paths compute percentages;
+    main-radio paths also use staged increments. Completion uses 100. Not a guarantee of bytes transferred
+    or successful later boot.
+notes: |-
+  Reports firmware-update target, state and progress following PGN 126720
+  command 0x0010. Captures show targets 1 (main radio), 2 (remote) and 7
+  (DAB module), and states 1 (In Progress), 2 (Completed) and 3 (Failed).
+  The remote-update capture includes progress 0, 48 and 100, ending with
+  Completed; the DAB capture includes In Progress and Failed at progress 0.
+
+  Progress is a nominal percentage or staged indicator, not a guaranteed
+  fraction of image bytes transferred. A Completed report does not prove
+  that subsequent installation or boot succeeded. There is no transaction
+  token, and repeated status messages are not necessarily separate replies.
+  Unknown target and state values remain numeric, without assumed sentinels;
+  additional model-specific meanings have not been established.
+
+  Evidence: samples/fusion-firmware-update.raw, from the same MS-NRX300 /
+  MS-RA70N sessions as the corresponding Update Firmware commands.
+samples:
+- raw:
+  - 2026-09-19-06:36:08.825,7,130820,12,255,8,e0,07,a3,99,16,80,01,01
+  - 2026-09-19-06:36:08.826,7,130820,12,255,8,e1,00,ff,ff,ff,ff,ff,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    messageId: Update Firmware Result
+    updateTarget: Main Radio
+    updateState: In Progress
+    progress: 0
+- raw:
+  - 2026-09-19-06:52:35.288,7,130820,12,255,8,20,07,a3,99,16,80,07,01
+  - 2026-09-19-06:52:35.289,7,130820,12,255,8,21,00,ff,ff,ff,ff,ff,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    messageId: Update Firmware Result
+    updateTarget: DAB
+    updateState: In Progress
+    progress: 0
+- raw:
+  - 2026-09-19-06:53:16.373,7,130820,12,255,8,60,07,a3,99,16,80,07,03
+  - 2026-09-19-06:53:16.374,7,130820,12,255,8,61,00,ff,ff,ff,ff,ff,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    messageId: Update Firmware Result
+    updateTarget: DAB
+    updateState: Failed
+    progress: 0
+- raw:
+  - 2026-09-19-06:49:00.707,7,130820,12,255,8,e0,07,a3,99,16,80,02,01
+  - 2026-09-19-06:49:00.707,7,130820,12,255,8,e1,00,ff,ff,ff,ff,ff,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    messageId: Update Firmware Result
+    updateTarget: Remote
+    updateState: In Progress
+    progress: 0
+- raw:
+  - 2026-09-19-06:50:29.628,7,130820,12,255,8,20,07,a3,99,16,80,02,01
+  - 2026-09-19-06:50:29.628,7,130820,12,255,8,21,30,ff,ff,ff,ff,ff,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    messageId: Update Firmware Result
+    updateTarget: Remote
+    updateState: In Progress
+    progress: 48
+- raw:
+  - 2026-09-19-06:51:58.668,7,130820,12,255,8,40,07,a3,99,16,80,02,02
+  - 2026-09-19-06:51:58.668,7,130820,12,255,8,41,64,ff,ff,ff,ff,ff,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    messageId: Update Firmware Result
+    updateTarget: Remote
+    updateState: Completed
+    progress: 100
+missing:
+- Lookups

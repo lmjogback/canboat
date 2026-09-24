@@ -1,0 +1,7 @@
+name: FUSION_UPDATE_TARGET
+kind: pair
+bits: 8
+values:
+  1: Main Radio
+  2: Remote
+  7: DAB

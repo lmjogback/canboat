@@ -1,0 +1,89 @@
+pgn: 126720
+id: fusionUpdateFirmware
+description: 'Fusion: Update Firmware'
+type: Fast
+priority: 7
+variantOrder: 69
+fields:
+- id: manufacturerCode
+  name: Manufacturer Code
+  type: LOOKUP
+  bits: 11
+  match: 419
+  lookup: MANUFACTURER_CODE
+  description: Fusion Electronics
+- id: reserved
+  name: Reserved
+  type: RESERVED
+  bits: 2
+- id: industryCode
+  name: Industry Code
+  type: LOOKUP
+  bits: 3
+  match: 4
+  lookup: INDUSTRY_CODE
+  description: Marine Industry
+- id: proprietaryId
+  name: Proprietary ID
+  type: LOOKUP
+  bits: 16
+  match: 16
+  lookup: FUSION_MESSAGE_ID
+  primaryKey: true
+  description: Update Firmware
+- id: updateTarget
+  name: Update Target
+  type: LOOKUP
+  bits: 8
+  lookup: FUSION_UPDATE_TARGET
+  specialValues: 0
+  description: Update destination, not a firmware-container component identifier. Other values are model-dependent.
+missing:
+- Lookups
+notes: |-
+  Requests a firmware update for the main radio (1), remote (2), or DAB
+  module (7). Command 0x0010 is not DAB-specific. The reassembled payload
+  contains the two-byte manufacturer prefix, two-byte command ID and one-byte
+  update target. The trailing 0xff in the physical CAN frame is fast-packet
+  padding, not a second command parameter.
+
+  Subsequent PGN 130820 message 0x8016 reports target, state and progress.
+  There is no transaction token, source selector, filename, version or image
+  data in this request. The captures demonstrate these targets on an
+  MS-RA70N controlled by an MS-NRX300; support on other models can differ.
+  Other target values remain unnamed. Target bytes are preserved without
+  assuming NMEA numeric sentinels.
+
+  Evidence: samples/fusion-firmware-update.raw, extracted from the NRX300
+  update, update-MS-RA70, update-NRX and update-DAB captures in
+  lmjogback/signalk-work at 1b9e391b2495ed7f68a60dd11b8f5cfc12fe992b,
+  projects/fusion/captures/.
+samples:
+- raw:
+  - 2026-09-19-06:36:08.806,7,126720,33,12,8,a0,05,a3,99,10,00,01,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    proprietaryId: Update Firmware
+    updateTarget: Main Radio
+- raw:
+  - 2026-09-19-06:52:35.259,7,126720,33,12,8,40,05,a3,99,10,00,07,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    proprietaryId: Update Firmware
+    updateTarget: DAB
+- raw:
+  - 2026-09-19-06:54:29.004,7,126720,33,12,8,60,05,a3,99,10,00,01,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    proprietaryId: Update Firmware
+    updateTarget: Main Radio
+- raw:
+  - 2026-09-19-06:49:00.701,7,126720,33,12,8,80,05,a3,99,10,00,02,ff
+  expects:
+    manufacturerCode: Fusion Electronics
+    industryCode: Marine Industry
+    proprietaryId: Update Firmware
+    updateTarget: Remote

@@ -1,0 +1,7 @@
+name: FUSION_UPDATE_STATE
+kind: pair
+bits: 8
+values:
+  1: In Progress
+  2: Completed
+  3: Failed

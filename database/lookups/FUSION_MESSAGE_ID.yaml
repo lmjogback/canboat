@@ -15,7 +15,7 @@ values:
   12: Request Menu Lock ID
   13: Set Aux Gain
   15: Set Settings
-  16: DAB Update Command
+  16: Update Firmware
   17: Set Mute
   18: Set Balance
   19: Set Low Pass Filter
@@ -52,3 +52,4 @@ values:
   73: Send External Amp Gain
   74: Send Internal Amp Gain
   75: Send Mono
+

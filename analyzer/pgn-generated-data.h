@@ -3596,6 +3596,20 @@ Pgn pgnList[] = {
      },
      .camelDescription = "fusionSetDeviceName"},
 
+    {"Fusion: Update Firmware",
+     126720,
+     PACKET_LOOKUPS_UNKNOWN,
+     PACKET_FAST,
+     {
+      {.name = "Manufacturer Code", .camelName = "manufacturerCode", .fieldType = "LOOKUP", .size = 11, .resolution = 1.0, .hasMatchValue = true, .matchValue = 419, .description = "Fusion Electronics", .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupMANUFACTURER_CODE, .lookup.name = "MANUFACTURER_CODE"},
+      {.name = "Reserved", .camelName = "reserved", .fieldType = "RESERVED", .size = 2, .resolution = 1.0},
+      {.name = "Industry Code", .camelName = "industryCode", .fieldType = "LOOKUP", .size = 3, .resolution = 1.0, .hasMatchValue = true, .matchValue = 4, .description = "Marine Industry", .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupINDUSTRY_CODE, .lookup.name = "INDUSTRY_CODE"},
+      {.name = "Proprietary ID", .camelName = "proprietaryId", .fieldType = "LOOKUP", .size = 16, .resolution = 1.0, .hasMatchValue = true, .matchValue = 16, .description = "Update Firmware", .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupFUSION_MESSAGE_ID, .lookup.name = "FUSION_MESSAGE_ID", .partOfPrimaryKey = true},
+      {.name = "Update Target", .camelName = "updateTarget", .fieldType = "LOOKUP", .size = 8, .resolution = 1.0, .description = "Update destination, not a firmware-container component identifier. Other values are model-dependent.", .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupFUSION_UPDATE_TARGET, .lookup.name = "FUSION_UPDATE_TARGET", .reservedOverride = 1}
+     },
+     .camelDescription = "fusionUpdateFirmware",
+     .priority = 7},
+
     {"0x1F000-0x1FEFF: Standardized mixed single/fast packet non-addressed",
      126976,
      PACKET_FIELDS_UNKNOWN | PACKET_FIELD_LENGTHS_UNKNOWN | PACKET_RESOLUTION_UNKNOWN,
@@ -8973,6 +8987,22 @@ Pgn pgnList[] = {
      .camelDescription = "fusionSystemCapabilities",
      .priority = 7},
 
+    {"Fusion: Update Firmware Result",
+     130820,
+     PACKET_LOOKUPS_UNKNOWN,
+     PACKET_FAST,
+     {
+      {.name = "Manufacturer Code", .camelName = "manufacturerCode", .fieldType = "LOOKUP", .size = 11, .resolution = 1.0, .hasMatchValue = true, .matchValue = 419, .description = "Fusion Electronics", .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupMANUFACTURER_CODE, .lookup.name = "MANUFACTURER_CODE"},
+      {.name = "Reserved", .camelName = "reserved", .fieldType = "RESERVED", .size = 2, .resolution = 1.0},
+      {.name = "Industry Code", .camelName = "industryCode", .fieldType = "LOOKUP", .size = 3, .resolution = 1.0, .hasMatchValue = true, .matchValue = 4, .description = "Marine Industry", .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupINDUSTRY_CODE, .lookup.name = "INDUSTRY_CODE"},
+      {.name = "Message ID", .camelName = "messageId", .fieldType = "LOOKUP", .size = 16, .resolution = 1.0, .hasMatchValue = true, .matchValue = 32790, .description = "Update Firmware Result", .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupFUSION_STATUS_MESSAGE_ID, .lookup.name = "FUSION_STATUS_MESSAGE_ID", .partOfPrimaryKey = true},
+      {.name = "Update Target", .camelName = "updateTarget", .fieldType = "LOOKUP", .size = 8, .resolution = 1.0, .description = "Update destination, not a firmware-container component identifier. Other values are model-dependent.", .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupFUSION_UPDATE_TARGET, .lookup.name = "FUSION_UPDATE_TARGET", .reservedOverride = 1},
+      {.name = "Update State", .camelName = "updateState", .fieldType = "LOOKUP", .size = 8, .resolution = 1.0, .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupFUSION_UPDATE_STATE, .lookup.name = "FUSION_UPDATE_STATE", .reservedOverride = 1},
+      {.name = "Progress", .camelName = "progress", .fieldType = "UINT8", .resolution = 1.0, .description = "Nominal percentage/staged progress indicator. Remote and DAB transfer paths compute percentages; main-radio paths also use staged increments. Completion uses 100. Not a guarantee of bytes transferred or successful later boot."}
+     },
+     .camelDescription = "fusionUpdateFirmwareResult",
+     .priority = 7},
+
     {"Navico: ASCII Data",
      130821,
      PACKET_FIELDS_UNKNOWN | PACKET_FIELD_LENGTHS_UNKNOWN | PACKET_RESOLUTION_UNKNOWN,
@@ -9044,6 +9074,28 @@ Pgn pgnList[] = {
       {.name = "Data", .camelName = "data", .fieldType = "BINARY", .size = 1768, .resolution = 1.0}
      },
      .camelDescription = "bepMarineProprietaryPgn130821"},
+
+    {"Fusion: Remote Firmware Block",
+     130821,
+     PACKET_RESOLUTION_UNKNOWN,
+     PACKET_FAST,
+     {
+      {.name = "Manufacturer Code", .camelName = "manufacturerCode", .fieldType = "LOOKUP", .size = 11, .resolution = 1.0, .hasMatchValue = true, .matchValue = 419, .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupMANUFACTURER_CODE, .lookup.name = "MANUFACTURER_CODE", .partOfPrimaryKey = true},
+      {.name = "Reserved", .camelName = "reserved", .fieldType = "RESERVED", .size = 2, .resolution = 1.0},
+      {.name = "Industry Code", .camelName = "industryCode", .fieldType = "LOOKUP", .size = 3, .resolution = 1.0, .hasMatchValue = true, .matchValue = 4, .lookup.type = LOOKUP_TYPE_PAIR, LOOKUP_PAIR_MEMBER = lookupINDUSTRY_CODE, .lookup.name = "INDUSTRY_CODE", .partOfPrimaryKey = true},
+      {.name = "Firmware Version", .camelName = "firmwareVersion", .fieldType = "UINT32", .resolution = 1.0, .description = "Raw little-endian version word; the captured NRX300 1.02.78 image uses 10278. Encoding for other versions or devices is not established.", .reservedOverride = 1},
+      {.name = "Image CRC", .camelName = "imageCrc", .fieldType = "UINT16", .resolution = 1.0, .description = "CRC of the complete firmware image, not just this block. Little-endian; reflected polynomial 0x8408, initial 0xffff, no final XOR in the captured transfer.", .reservedOverride = 1},
+      {.name = "Block Count", .camelName = "blockCount", .fieldType = "UINT16", .resolution = 1.0, .description = "Total number of blocks advertised by the sender; 1022 in the captured transfer. Do not derive this field from a presumed image-size formula.", .reservedOverride = 1},
+      {.name = "Block Index", .camelName = "blockIndex", .fieldType = "UINT16", .resolution = 1.0, .description = "Zero-based block index, from 0 through 1021 in the captured transfer.", .reservedOverride = 1},
+      {.name = "Byte Offset", .camelName = "byteOffset", .fieldType = "UINT32", .resolution = 1.0, .description = "Offset of the first data byte within the complete firmware image.", .reservedOverride = 1},
+      {.name = "Data Length", .camelName = "dataLength", .fieldType = "UINT16", .resolution = 1.0, .description = "Number of following data bytes: 128 in the captured full blocks and 60 in the final block. Excludes fast-packet framing and padding.", .reservedOverride = 1},
+      {.name = "Data Byte", .camelName = "dataByte", .fieldType = "BINARY", .size = 8, .resolution = 1.0}
+     },
+     .camelDescription = "fusionRemoteFirmwareBlock",
+     .priority = 7,
+     .repeatingCount1 = 1,
+     .repeatingStart1 = 10,
+     .repeatingField1 = 9},
 
     {"Navico: UDB Database, Object Ping",
      130822,
