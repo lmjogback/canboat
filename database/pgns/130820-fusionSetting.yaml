@@ -45,10 +45,13 @@ fields:
     order: 5
 notes: |-
   `value` is an INDIRECT_LOOKUP keyed on the `id` field, so a setting whose
-  values form a closed set decodes to a name. Only FUSION_SETTING 7 "Tuner
-  Region" is enumerated so far; every other setting's value decodes as the
-  plain number it always did, which is what the preset frequencies and the
-  volume levels need.
+  values form a closed set decodes to a name. FUSION_SETTING 2 "Zone 2 Linked",
+  11 "iPod Album Artwork", and 64 "AM Enabled" use Off/On values. Setting 6
+  "Telemute" selects the action on input activation: 0 = Mute, 1 = switch to
+  AUX1; this is a configuration value, not the current input state.
+  Setting 7 "Tuner Region" uses a region enumeration. Values without
+  an indirect lookup entry continue to decode as plain numbers, which is what
+  the preset frequencies and volume levels need.
 
   Not every setting belongs in the enumeration. Id 74 "Volume Zone Sync" is
   deliberately left out: its value is a zero-based ZONE INDEX with a sentinel
@@ -62,7 +65,12 @@ notes: |-
   This message is observed as the immediate status update after changing
   or clearing a tuner preset with Fusion: Set Setting on PGN 126720.
 
-  Evidence: samples/fusion-tuner-presets.raw.
+  Evidence: samples/fusion-setting-values.raw contains observed
+  MS-RA70N/MS-NRX300 Set Setting / Setting exchanges for Zone 2 Linked
+  Off/On and Telemute Mute/AUX1 actions. The iPod Album Artwork and AM Enabled
+  mappings are supported by controlled Set Setting command captures in that
+  file; no matching singular Setting status is claimed for those captures.
+  samples/fusion-tuner-presets.raw contains the tuner preset evidence.
 
 samples:
 - raw: "2023-01-01-00:00:00.000,7,130820,12,255,12,a3,99,14,80,0e,00,00,00,10,f7,07,00"  # from fusion-tuner-presets.raw
@@ -107,3 +115,32 @@ samples:
     messageId: "Setting"
     id: "FM Preset 7"
     value: 101500000
+
+- raw: "2026-09-12T10:11:06.713994Z,7,130820,12,255,12,a3,99,14,80,02,00,00,00,01,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    messageId: "Setting"
+    id: "Zone 2 Linked"
+    value: "On"
+- raw: "2026-09-12T10:11:09.649705Z,7,130820,12,255,12,a3,99,14,80,02,00,00,00,00,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    messageId: "Setting"
+    id: "Zone 2 Linked"
+    value: "Off"
+- raw: "2026-09-19T06:32:05.767916Z,7,130820,12,255,12,a3,99,14,80,06,00,00,00,01,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    messageId: "Setting"
+    id: "Telemute"
+    value: "AUX1"
+- raw: "2026-09-19T06:32:07.475876Z,7,130820,12,255,12,a3,99,14,80,06,00,00,00,00,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    messageId: "Setting"
+    id: "Telemute"
+    value: "Mute"

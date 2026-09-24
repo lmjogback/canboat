@@ -53,6 +53,14 @@ notes: |-
   the unit to read ID 0 (Alpha Search Threshold); it instead changed setting
   2, which only fits the layout above.
 
+  Setting 2 "Zone 2 Linked" uses Off/On values, both observed in
+  MS-RA70N/MS-NRX300 command and status exchanges. Setting 6 "Telemute"
+  selects the action when the Telemute input is activated: 0 = Mute,
+  1 = switch to AUX1. It does not report whether the input is active.
+  Both action values are observed in the same device setup.
+  Settings 11 "iPod Album Artwork" and 64 "AM Enabled" also use Off/On; both
+  values are observed in controlled on/off Set Setting command captures.
+
   AM preset IDs 14 through 28 and FM preset IDs 29 through 43 use value as
   the preset frequency in Hz. Setting value to zero clears the preset.
 
@@ -64,8 +72,11 @@ notes: |-
   ~20 ms later by a Fusion MS-WB670 echoing the same id and value as a 130820
   status message, with both changes taking effect on the unit.
 
-  samples/fusion-tuner-presets.raw contains the AM/FM preset set and clear
-  operations observed on an MS-RA70N/MS-NRX300.
+  samples/fusion-setting-values.raw contains the observed Zone 2 Linked
+  Off/On and Telemute Mute/AUX1 exchanges plus controlled iPod Album Artwork
+  and AM Enabled Set Setting on/off commands. samples/fusion-tuner-presets.raw
+  contains the AM/FM preset set and clear operations observed on an
+  MS-RA70N/MS-NRX300.
 samples:
 - raw: "2023-01-01-00:00:00.000,7,126720,200,51,12,a3,99,0f,00,02,00,00,00,01,00,00,00"  # from fusion-set-setting-zone-link.raw
   expects:
@@ -73,14 +84,14 @@ samples:
     industryCode: "Marine Industry"
     proprietaryId: "Set Settings"
     id: "Zone 2 Linked"
-    value: 1
+    value: "On"
 - raw: "2023-01-01-00:00:00.000,7,126720,200,51,12,a3,99,0f,00,02,00,00,00,00,00,00,00"  # from fusion-set-setting-zone-link.raw
   expects:
     manufacturerCode: "Fusion Electronics"
     industryCode: "Marine Industry"
     proprietaryId: "Set Settings"
     id: "Zone 2 Linked"
-    value: 0
+    value: "Off"
 
 - raw: "2023-01-01-00:00:00.000,7,126720,33,12,12,a3,99,0f,00,0e,00,00,00,10,f7,07,00"  # from fusion-tuner-presets.raw
   expects:
@@ -124,3 +135,60 @@ samples:
     proprietaryId: "Set Settings"
     id: "FM Preset 7"
     value: 101500000
+
+- raw: "2026-09-12T10:11:06.705895Z,7,126720,33,12,12,a3,99,0f,00,02,00,00,00,01,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    proprietaryId: "Set Settings"
+    id: "Zone 2 Linked"
+    value: "On"
+- raw: "2026-09-12T10:11:09.647073Z,7,126720,33,12,12,a3,99,0f,00,02,00,00,00,00,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    proprietaryId: "Set Settings"
+    id: "Zone 2 Linked"
+    value: "Off"
+- raw: "2026-09-19T06:32:05.765296Z,7,126720,33,12,12,a3,99,0f,00,06,00,00,00,01,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    proprietaryId: "Set Settings"
+    id: "Telemute"
+    value: "AUX1"
+- raw: "2026-09-19T06:32:07.467842Z,7,126720,33,12,12,a3,99,0f,00,06,00,00,00,00,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    proprietaryId: "Set Settings"
+    id: "Telemute"
+    value: "Mute"
+- raw: "2023-01-01-00:00:00.000,7,126720,33,15,12,a3,99,0f,00,0b,00,00,00,01,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    proprietaryId: "Set Settings"
+    id: "iPod Album Artwork"
+    value: "On"
+- raw: "2023-01-01-00:00:00.000,7,126720,33,15,12,a3,99,0f,00,0b,00,00,00,00,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    proprietaryId: "Set Settings"
+    id: "iPod Album Artwork"
+    value: "Off"
+- raw: "2023-01-01-00:00:00.000,7,126720,33,15,12,a3,99,0f,00,40,00,00,00,00,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    proprietaryId: "Set Settings"
+    id: "AM Enabled"
+    value: "Off"
+- raw: "2023-01-01-00:00:00.000,7,126720,33,15,12,a3,99,0f,00,40,00,00,00,01,00,00,00"  # from fusion-setting-values.raw
+  expects:
+    manufacturerCode: "Fusion Electronics"
+    industryCode: "Marine Industry"
+    proprietaryId: "Set Settings"
+    id: "AM Enabled"
+    value: "On"

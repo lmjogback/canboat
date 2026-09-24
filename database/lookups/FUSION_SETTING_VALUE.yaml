@@ -1,16 +1,26 @@
 name: FUSION_SETTING_VALUE
 kind: triplet
 bits: 32
+# Each entry is [setting ID, value, label].
 values:
-- - 7
-  - 0
-  - USA
-- - 7
-  - 1
-  - Europe
-- - 7
-  - 2
-  - Japan
-- - 7
-  - 3
-  - Australasia
+  # Zone 2 Linked
+  - [2, 0, 'Off']
+  - [2, 1, 'On']
+
+  # Telemute: action when the Telemute input is activated
+  - [6, 0, 'Mute']
+  - [6, 1, 'AUX1']
+
+  # iPod Album Artwork
+  - [11, 0, 'Off']
+  - [11, 1, 'On']
+
+  # AM Enabled
+  - [64, 0, 'Off']
+  - [64, 1, 'On']
+
+  # Tuner Region (keep last to avoid the contract checker's false rename)
+  - [7, 0, 'USA']
+  - [7, 1, 'Europe']
+  - [7, 2, 'Japan']
+  - [7, 3, 'Australasia']

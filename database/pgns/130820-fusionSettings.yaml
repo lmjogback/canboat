@@ -50,6 +50,18 @@ fields:
         name: FUSION_SETTING_VALUE
         order: 6
 notes: |-
+  Values use the same FUSION_SETTING_VALUE indirect lookup as the singular
+  Fusion: Setting message. Settings 2 "Zone 2 Linked", 11 "iPod Album Artwork",
+  and 64 "AM Enabled" decode 0/1 as Off/On. Setting 6 "Telemute" selects the
+  action on input activation: 0 = Mute, 1 = switch to AUX1; it does not
+  report the current input state. Setting 7 "Tuner Region" decodes to its
+  region name. Values without an indirect lookup entry remain numeric.
+
+  Both values for these settings are observed in the controlled captures in
+  samples/fusion-setting-values.raw, rather than only as the single values
+  in these bulk snapshots. The iPod Album Artwork sample below exercises the
+  same mapping in a bulk Settings message.
+
   For AM preset IDs 14 through 28 and FM preset IDs 29 through 43, value is
   the stored preset frequency in Hz. A value of zero indicates an empty
   preset.
@@ -62,9 +74,9 @@ samples:
     messageId: "Settings"
     count: 26
     id: "Telemute"
-    value: 0
+    value: "Mute"
     id.2: "Zone 2 Linked"
-    value.2: 0
+    value.2: "Off"
     id.3: "Zone 2 Enabled"
     value.3: 1
     id.4: "Zone 3 Enabled"
@@ -76,7 +88,7 @@ samples:
     id.7: "Internal Amps On"
     value.7: 1
     id.8: "Tuner Region"
-    value.8: 0
+    value.8: "USA"
     id.9: "AM Preset 0"
     value.9: 0
     id.10: "AM Preset 1"
@@ -150,7 +162,7 @@ samples:
     id.15: "iPod Shuffle"
     value.15: 1
     id.16: "iPod Album Artwork"
-    value.16: 1
+    value.16: "On"
     id.17: "USB Repeat"
     value.17: 1
     id.18: "USB Shuffle"

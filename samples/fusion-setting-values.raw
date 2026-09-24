@@ -1,0 +1,43 @@
+# format=FAST
+# Fusion setting values: real, reassembled CAN captures; payloads unchanged.
+# Source: lmjogback/signalk-work commit 4d146ab507d50a9c03033f4577dbb5c5ee9b5a1e,
+# projects/fusion/captures/. Original filenames and line numbers follow.
+# Timestamped sessions use the first CAN frame timestamp, converted to UTC.
+# Untimestamped fragments use 2023-01-01 only as a format placeholder.
+# No response or elapsed time is inferred for those command-only fragments.
+
+# fusion-zone-metadata.log: setting 2.
+# MS-NRX300 address 33 -> MS-RA70N address 12; matching status follows.
+# Original lines 1731, 1732.
+2026-09-12T10:11:06.705895Z,7,126720,33,12,12,a3,99,0f,00,02,00,00,00,01,00,00,00
+# Original lines 1735, 1736.
+2026-09-12T10:11:06.713994Z,7,130820,12,255,12,a3,99,14,80,02,00,00,00,01,00,00,00
+# Original lines 1745, 1746.
+2026-09-12T10:11:09.647073Z,7,126720,33,12,12,a3,99,0f,00,02,00,00,00,00,00,00,00
+# Original lines 1747, 1748.
+2026-09-12T10:11:09.649705Z,7,130820,12,255,12,a3,99,14,80,02,00,00,00,00,00,00,00
+
+# fusion-nrx300-telmute.log: setting 6, Telemute action (0 = Mute, 1 = AUX1).
+# MS-NRX300 address 33 -> MS-RA70N address 12; matching status follows.
+# Original lines 146, 147.
+2026-09-19T06:32:05.765296Z,7,126720,33,12,12,a3,99,0f,00,06,00,00,00,01,00,00,00
+# Original lines 148, 149.
+2026-09-19T06:32:05.767916Z,7,130820,12,255,12,a3,99,14,80,06,00,00,00,01,00,00,00
+# Original lines 150, 151.
+2026-09-19T06:32:07.467842Z,7,126720,33,12,12,a3,99,0f,00,06,00,00,00,00,00,00,00
+# Original lines 152, 153.
+2026-09-19T06:32:07.475876Z,7,130820,12,255,12,a3,99,14,80,06,00,00,00,00,00,00,00
+
+# artwork.on-off.log: setting 11.
+# Untimestamped command-only fragment, address 33 -> 15; no model inferred.
+# Original lines 1, 2.
+2023-01-01-00:00:00.000,7,126720,33,15,12,a3,99,0f,00,0b,00,00,00,01,00,00,00
+# Original lines 3, 4.
+2023-01-01-00:00:00.000,7,126720,33,15,12,a3,99,0f,00,0b,00,00,00,00,00,00,00
+
+# set.sources.am.on-off.log: setting 64.
+# Untimestamped command-only fragment, address 33 -> 15; no model inferred.
+# Original lines 1, 2.
+2023-01-01-00:00:00.000,7,126720,33,15,12,a3,99,0f,00,40,00,00,00,00,00,00,00
+# Original lines 3, 4.
+2023-01-01-00:00:00.000,7,126720,33,15,12,a3,99,0f,00,40,00,00,00,01,00,00,00
