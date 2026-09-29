@@ -414,17 +414,16 @@ limitations under the License.
                       <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>7</td><td>Reserved</td><td/><td/><td>24 bits
                   <a href="#ft-RESERVED">RESERVED</a></td><td/></tr></table><h3 id="pgn-61184">0xEF00:
             PGN 61184
-            - Victron: VE.Can Register</h3><p>
+            - Victron: Channel Capabilities</h3><p>
               This PGN description applies when the following field(s) match:
-              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr></table></p><p>Victron VE.Can register (VREG) read/broadcast: the frame carries a 16-bit register id and the register's value, whose type is selected by the register id (see the VE.Can registers document at .url). Register ids that are not listed, or that carry a multi-field or string value, decode as raw bytes.</p><p>
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57088</td></tr></table></p><p/><p>
                 This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
-                <ul><li>The list of fields is incomplete; some fields maybe be missing or their attributes may be incorrect</li><li>The length of one or more fields is likely incorrect</li><li>The resolution of one or more fields is likely incorrect</li><li>The default transmission interval is not known</li></ul></p><p>
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
             This
              single-frame 
             PGN is
-            
-              at least 4
-            bytes long and contains 5 fields.
+            8
+            bytes long and contains 7 fields.
 
             
               The default priority (as observed in the field) is 7.
@@ -437,14 +436,18 @@ limitations under the License.
                   Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
                   
                       lookup
-                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td/><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57088:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
                   
-                      lookup
-                      <a href="#lookup-VICTRON_VREG">VICTRON_VREG</a>
-                      that defines the next variable field's type.
-                    </td><td>true</td></tr><tr><td>5</td><td>Value</td><td>Register value; its type is selected by Register Id</td><td> </td><td>
-                    Variable length
-                  <a href="#ft-DYNAMIC_FIELD_VALUE">DYNAMIC_FIELD_VALUE</a></td><td/></tr></table><p>
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Capabilities</td><td/><td><div class="xs">0 .. 255</div></td><td>8 bits
+                  
+                      bitfield
+                      <a href="#lookupbit-VICTRON_SWITCH_CHANNEL_CAPABILITIES">VICTRON_SWITCH_CHANNEL_CAPABILITIES</a></td><td/></tr><tr><td>7</td><td>Reserved</td><td/><td/><td>16 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr></table><p>
               Source:
               <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
             PGN 61184
@@ -492,6 +495,42 @@ limitations under the License.
                         unsigned
                       <a href="#ft-NUMBER">NUMBER</a></td><td/></tr></table><h3 id="pgn-61184">0xEF00:
             PGN 61184
+            - Victron: Module State</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57089</td></tr></table></p><p/><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            8
+            bytes long and contains 6 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57089:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Status</td><td/><td><div class="xs">0 .. 65535</div></td><td>16 bits
+                  
+                      bitfield
+                      <a href="#lookupbit-VICTRON_SWITCH_MODULE_STATUS">VICTRON_SWITCH_MODULE_STATUS</a></td><td/></tr><tr><td>6</td><td>Capabilities</td><td/><td><div class="xs">0 .. 65535</div></td><td>16 bits
+                  
+                      bitfield
+                      <a href="#lookupbit-VICTRON_SWITCH_MODULE_CAPABILITIES">VICTRON_SWITCH_MODULE_CAPABILITIES</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
+            PGN 61184
             - Simnet: Keep Alive</h3><p>
               This PGN description applies when the following field(s) match:
               <table><tr><td>Manufacturer Code</td><td>1857</td></tr><tr><td>Industry Code</td><td>4</td></tr></table></p><p>Addressed keep-alive a display sends to a device - for example a wireless masthead wind sensor - to keep it from entering NMEA 2000 sleep while its data is in use. The display renews it periodically and re-sends it when it boots. Usually only the request form is seen (empty Session/Status); the reply carries a status.</p><p>
@@ -522,7 +561,422 @@ limitations under the License.
                   
                         unsigned
                       <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>7</td><td>Value</td><td>Only meaningful in a reply (carries a status); left unset (0xFF) in a request</td><td/><td>32 bits
-                  <a href="#ft-BINARY">BINARY</a></td><td/></tr></table><h2 id="pgn-61440">0xF000-0xFEFF: Standardized single-frame non-addressed</h2><p>PGNs in PDU2 (non-addressed) single-frame PGN range 0xF000 to 0xFEFF (61440 - 65279). When this is shown during analysis it means the PGN is not reverse engineered yet.</p><h3 id="pgn-65001">0xFDE9:
+                  <a href="#ft-BINARY">BINARY</a></td><td/></tr></table><h3 id="pgn-61184">0xEF00:
+            PGN 61184
+            - Victron: Number of Channels</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57090</td></tr></table></p><p/><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            8
+            bytes long and contains 6 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57090:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Number of Channels</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Reserved</td><td/><td/><td>24 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
+            PGN 61184
+            - Victron: Fuse Limits</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57091</td></tr></table></p><p/><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            8
+            bytes long and contains 8 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57091:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Lower Limit</td><td/><td><div class="xs">0 .. 255</div></td><td>8 bits
+                  
+                      lookup
+                      <a href="#lookup-VICTRON_SWITCH_FUSE_RATING">VICTRON_SWITCH_FUSE_RATING</a></td><td/></tr><tr><td>7</td><td>Higher Limit</td><td/><td><div class="xs">0 .. 255</div></td><td>8 bits
+                  
+                      lookup
+                      <a href="#lookup-VICTRON_SWITCH_FUSE_RATING">VICTRON_SWITCH_FUSE_RATING</a></td><td/></tr><tr><td>8</td><td>Reserved</td><td/><td/><td>8 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
+            PGN 61184
+            - Victron: Channel Supported Types</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57093</td></tr></table></p><p>The 24-bit field describes type indices 8-31; the low eight supported type bits are in 0xDF06.</p><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            8
+            bytes long and contains 6 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57093:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Supported Types (8-31)</td><td/><td><div class="xs">0 .. 16777215</div></td><td>24 bits
+                  
+                      bitfield
+                      <a href="#lookupbit-VICTRON_SWITCH_EXTENDED_TYPES">VICTRON_SWITCH_EXTENDED_TYPES</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
+            PGN 61184
+            - Victron: Channel Mode</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57094</td></tr></table></p><p/><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            8
+            bytes long and contains 8 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57094:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Type</td><td/><td><div class="xs">0 .. 255</div></td><td>8 bits
+                  
+                      lookup
+                      <a href="#lookup-VICTRON_SWITCH_CHANNEL_TYPE">VICTRON_SWITCH_CHANNEL_TYPE</a></td><td/></tr><tr><td>7</td><td>Fuse Rating</td><td/><td><div class="xs">0 .. 255</div></td><td>8 bits
+                  
+                      lookup
+                      <a href="#lookup-VICTRON_SWITCH_FUSE_RATING">VICTRON_SWITCH_FUSE_RATING</a></td><td/></tr><tr><td>8</td><td>Supported Types (0-7)</td><td/><td><div class="xs">0 .. 255</div></td><td>8 bits
+                  
+                      bitfield
+                      <a href="#lookupbit-VICTRON_SWITCH_BASIC_TYPES">VICTRON_SWITCH_BASIC_TYPES</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
+            PGN 61184
+            - Victron: Channel Status</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57095</td></tr></table></p><p>Status flags for an output; the same bit positions have different meanings for input channels.</p><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            8
+            bytes long and contains 6 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57095:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Status</td><td/><td><div class="xs">0 .. 16777215</div></td><td>24 bits
+                  
+                      bitfield
+                      <a href="#lookupbit-VICTRON_SWITCH_CHANNEL_STATUS">VICTRON_SWITCH_CHANNEL_STATUS</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
+            PGN 61184
+            - Victron: Channel Control</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57096</td></tr></table></p><p/><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            8
+            bytes long and contains 12 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57096:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>PWM</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>7</td><td>State</td><td/><td><div class="xs">0 .. 2</div></td><td>2 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>8</td><td>Auto Mode</td><td/><td><div class="xs">0 .. 2</div></td><td>2 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>9</td><td>Reserved</td><td/><td/><td>3 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>10</td><td>Extended Value</td><td/><td><div class="xs">0 .. 1</div></td><td>1 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>11</td><td>Show UI Control</td><td/><td><div class="xs">0 .. 29</div></td><td>5 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>12</td><td>Reserved</td><td/><td/><td>3 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
+            PGN 61184
+            - Victron: Channel Step</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57101</td></tr></table></p><p/><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            8
+            bytes long and contains 6 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57101:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Step Size</td><td/><td>0.001 <div class="xs">0 .. 16777.212</div></td><td>24 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
+            PGN 61184
+            - Victron: Channel Request</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57106</td></tr></table></p><p/><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            8
+            bytes long and contains 6 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57106:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Request Mask</td><td/><td><div class="xs">0 .. 16777215</div></td><td>24 bits
+                  
+                      bitfield
+                      <a href="#lookupbit-VICTRON_SWITCH_REQUEST_MASK">VICTRON_SWITCH_REQUEST_MASK</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
+            PGN 61184
+            - Victron: Channel Output Limit</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57107</td></tr></table></p><p>The value 0xFFF means NOP or invalid; 0-4000 represents 0-100 percent.</p><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            8
+            bytes long and contains 7 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57107:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Minimum</td><td/><td>0.025 %<div class="xs">0 .. 102.3</div></td><td>12 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>7</td><td>Maximum</td><td/><td>0.025 %<div class="xs">0 .. 102.3</div></td><td>12 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
+            PGN 61184
+            - Victron: Venus OS Language</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>58338</td></tr></table></p><p/><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            8
+            bytes long and contains 6 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>58338:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Language</td><td/><td> </td><td>16 bits
+                  <a href="#ft-STRING_FIX">STRING_FIX</a></td><td/></tr><tr><td>6</td><td>Reserved</td><td/><td/><td>16 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-61184">0xEF00:
+            PGN 61184
+            - Victron: VE.Can Register</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr></table></p><p>Victron VE.Can register (VREG) read/broadcast: the frame carries a 16-bit register id and the register's value, whose type is selected by the register id (see the VE.Can registers document at .url). Register ids that are not listed, or that carry a multi-field or string value, decode as raw bytes.</p><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The list of fields is incomplete; some fields maybe be missing or their attributes may be incorrect</li><li>The length of one or more fields is likely incorrect</li><li>The resolution of one or more fields is likely incorrect</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             single-frame 
+            PGN is
+            
+              at least 4
+            bytes long and contains 5 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td/><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                      lookup
+                      <a href="#lookup-VICTRON_VREG">VICTRON_VREG</a>
+                      that defines the next variable field's type.
+                    </td><td>true</td></tr><tr><td>5</td><td>Value</td><td>Register value; its type is selected by Register Id</td><td> </td><td>
+                    Variable length
+                  <a href="#ft-DYNAMIC_FIELD_VALUE">DYNAMIC_FIELD_VALUE</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h2 id="pgn-61440">0xF000-0xFEFF: Standardized single-frame non-addressed</h2><p>PGNs in PDU2 (non-addressed) single-frame PGN range 0xF000 to 0xFEFF (61440 - 65279). When this is shown during analysis it means the PGN is not reverse engineered yet.</p><h3 id="pgn-65001">0xFDE9:
             PGN 65001
             - Bus #1 Phase C Basic AC Quantities</h3><p/><p>
                 This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
@@ -7484,7 +7938,214 @@ limitations under the License.
                       lookup
                       <a href="#lookup-FUSION_MESSAGE_ID">FUSION_MESSAGE_ID</a></td><td>true</td></tr><tr><td>5</td><td>Name</td><td/><td> </td><td>
                     Variable length
-                  <a href="#ft-STRING_LZ">STRING_LZ</a></td><td/></tr></table><h2 id="pgn-126976">0x1F000-0x1FEFF: Standardized mixed single/fast packet non-addressed</h2><p>Standardized PGNs in PDU2 (non-addressed) mixed single/fast packet PGN range 0x1F000 to 0x1FEFF (126976 - 130815). When this is shown during analysis it means the PGN is not reverse engineered yet.</p><h3 id="pgn-126983">0x1F007:
+                  <a href="#ft-STRING_LZ">STRING_LZ</a></td><td/></tr></table><h3 id="pgn-126720">0x1EF00:
+            PGN 126720
+            - Victron: Channel Value</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57097</td></tr></table></p><p>Value is the signed integer multiplied by 10 to the power of Exponent.</p><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             fast-packet 
+            PGN is
+            10
+            bytes long and contains 7 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57097:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Exponent</td><td/><td><div class="xs">-127 .. 124</div></td><td>8 bits
+                  
+                        signed
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>7</td><td>Value</td><td/><td><div class="xs">-2147483647 .. 2147483644</div></td><td>32 bits
+                  
+                        signed
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-126720">0x1EF00:
+            PGN 126720
+            - Victron: Channel Minimum Value</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57102</td></tr></table></p><p>Value is the signed integer multiplied by 10 to the power of Exponent.</p><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             fast-packet 
+            PGN is
+            10
+            bytes long and contains 7 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57102:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Exponent</td><td/><td><div class="xs">-127 .. 124</div></td><td>8 bits
+                  
+                        signed
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>7</td><td>Value</td><td/><td><div class="xs">-2147483647 .. 2147483644</div></td><td>32 bits
+                  
+                        signed
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-126720">0x1EF00:
+            PGN 126720
+            - Victron: Channel Maximum Value</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57103</td></tr></table></p><p>Value is the signed integer multiplied by 10 to the power of Exponent.</p><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             fast-packet 
+            PGN is
+            10
+            bytes long and contains 7 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57103:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Exponent</td><td/><td><div class="xs">-127 .. 124</div></td><td>8 bits
+                  
+                        signed
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>7</td><td>Value</td><td/><td><div class="xs">-2147483647 .. 2147483644</div></td><td>32 bits
+                  
+                        signed
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-126720">0x1EF00:
+            PGN 126720
+            - Victron: Channel Measurement</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57104</td></tr></table></p><p>Value is the signed integer multiplied by 10 to the power of Exponent.</p><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             fast-packet 
+            PGN is
+            10
+            bytes long and contains 7 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57104:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Exponent</td><td/><td><div class="xs">-127 .. 124</div></td><td>8 bits
+                  
+                        signed
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>7</td><td>Value</td><td/><td><div class="xs">-2147483647 .. 2147483644</div></td><td>32 bits
+                  
+                        signed
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h3 id="pgn-126720">0x1EF00:
+            PGN 126720
+            - Victron: Channel Light Control</h3><p>
+              This PGN description applies when the following field(s) match:
+              <table><tr><td>Manufacturer Code</td><td>358</td></tr><tr><td>Industry Code</td><td>4</td></tr><tr><td>Register Id</td><td>57105</td></tr></table></p><p/><p>
+                This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
+                <ul><li>The PGN has not been seen in any logfiles yet</li><li>The default transmission interval is not known</li></ul></p><p>
+            This
+             fast-packet 
+            PGN is
+            12
+            bytes long and contains 11 fields.
+
+            
+              The default priority (as observed in the field) is 7.
+            </p><table><tr><th> Field # </th><th> Field Name </th><th> Description </th><th> Unit </th><th> Type </th><th> PartOfPrimaryKey </th></tr><tr><td>1</td><td>Manufacturer Code</td><td>358:
+                  Victron Energy</td><td><div class="xs">0 .. 2044</div></td><td>11 bits
+                  
+                      lookup
+                      <a href="#lookup-MANUFACTURER_CODE">MANUFACTURER_CODE</a></td><td/></tr><tr><td>2</td><td>Reserved</td><td/><td/><td>2 bits
+                  <a href="#ft-RESERVED">RESERVED</a></td><td/></tr><tr><td>3</td><td>Industry Code</td><td>4:
+                  Marine Industry</td><td><div class="xs">0 .. 6</div></td><td>3 bits
+                  
+                      lookup
+                      <a href="#lookup-INDUSTRY_CODE">INDUSTRY_CODE</a></td><td/></tr><tr><td>4</td><td>Register Id</td><td>57105:
+                  </td><td><div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td>true</td></tr><tr><td>5</td><td>Channel Index</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>6</td><td>Intensity</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>7</td><td>Red</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>8</td><td>Green</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>9</td><td>Blue</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>10</td><td>White Brightness</td><td/><td><div class="xs">0 .. 252</div></td><td>8 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr><tr><td>11</td><td>Color Temperature</td><td/><td>K<div class="xs">0 .. 65532</div></td><td>16 bits
+                  
+                        unsigned
+                      <a href="#ft-NUMBER">NUMBER</a></td><td/></tr></table><p>
+              Source:
+              <a href="https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf">https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf</a></p><h2 id="pgn-126976">0x1F000-0x1FEFF: Standardized mixed single/fast packet non-addressed</h2><p>Standardized PGNs in PDU2 (non-addressed) mixed single/fast packet PGN range 0x1F000 to 0x1FEFF (126976 - 130815). When this is shown during analysis it means the PGN is not reverse engineered yet.</p><h3 id="pgn-126983">0x1F007:
             PGN 126983
             - Alert</h3><p/><p>
                 This PGN is not fully reverse engineered. Some aspects that are known to be missing/incorrect:
@@ -24252,7 +24913,11 @@ The Default update rate of this PGN is autonomous, as it is dependent upon notif
         (0 - 7)
       </h3><table><tr><th>Value</th><th>Description</th></tr><tr><td>0</td><td>Rudder limit controlled</td></tr><tr><td>1</td><td>Turn rate controlled</td></tr><tr><td>2</td><td>Radius controlled</td></tr></table><h3 id="lookup-TX_RX_MODE">TX_RX_MODE
         (0 - 15)
-      </h3><table><tr><th>Value</th><th>Description</th></tr><tr><td>0</td><td>Tx A/Tx B, Rx A/Rx B</td></tr><tr><td>1</td><td>Tx A, Rx A/Rx B</td></tr><tr><td>2</td><td>Tx B, Rx A/Rx B</td></tr></table><h3 id="lookup-VIDEO_PROTOCOLS">VIDEO_PROTOCOLS
+      </h3><table><tr><th>Value</th><th>Description</th></tr><tr><td>0</td><td>Tx A/Tx B, Rx A/Rx B</td></tr><tr><td>1</td><td>Tx A, Rx A/Rx B</td></tr><tr><td>2</td><td>Tx B, Rx A/Rx B</td></tr></table><h3 id="lookup-VICTRON_SWITCH_CHANNEL_TYPE">VICTRON_SWITCH_CHANNEL_TYPE
+        (0 - 255)
+      </h3><table><tr><th>Value</th><th>Description</th></tr><tr><td>0</td><td>Momentary</td></tr><tr><td>1</td><td>Toggle</td></tr><tr><td>2</td><td>Dimming</td></tr><tr><td>5</td><td>Parallel</td></tr><tr><td>6</td><td>Temperature Setpoint</td></tr><tr><td>7</td><td>Multi-step</td></tr><tr><td>8</td><td>Dropdown</td></tr><tr><td>9</td><td>Basic Slider</td></tr><tr><td>10</td><td>Numeric Input</td></tr><tr><td>11</td><td>Three State Switch</td></tr><tr><td>12</td><td>Bilge Pump</td></tr><tr><td>13</td><td>RGB Light</td></tr><tr><td>14</td><td>CCT Light</td></tr><tr><td>15</td><td>RGBW Light</td></tr><tr><td>128</td><td>Input Discrete Value</td></tr><tr><td>129</td><td>Input Without Range</td></tr><tr><td>130</td><td>Input With Range</td></tr><tr><td>131</td><td>Input Temperature</td></tr><tr><td>255</td><td>NOP Or Not Applicable</td></tr></table><h3 id="lookup-VICTRON_SWITCH_FUSE_RATING">VICTRON_SWITCH_FUSE_RATING
+        (0 - 255)
+      </h3><table><tr><th>Value</th><th>Description</th></tr><tr><td>1</td><td>1 A</td></tr><tr><td>2</td><td>2 A</td></tr><tr><td>3</td><td>3 A</td></tr><tr><td>4</td><td>4 A</td></tr><tr><td>5</td><td>5 A</td></tr><tr><td>6</td><td>6 A</td></tr><tr><td>7</td><td>7 A</td></tr><tr><td>8</td><td>10 A</td></tr><tr><td>9</td><td>15 A</td></tr><tr><td>10</td><td>20 A</td></tr><tr><td>11</td><td>30 A</td></tr><tr><td>12</td><td>8 A</td></tr><tr><td>13</td><td>9 A</td></tr><tr><td>14</td><td>11 A</td></tr><tr><td>15</td><td>12 A</td></tr><tr><td>16</td><td>13 A</td></tr><tr><td>17</td><td>14 A</td></tr><tr><td>255</td><td>NOP Or Not Applicable</td></tr></table><h3 id="lookup-VIDEO_PROTOCOLS">VIDEO_PROTOCOLS
         (0 - 15)
       </h3><table><tr><th>Value</th><th>Description</th></tr><tr><td>0</td><td>PAL</td></tr><tr><td>1</td><td>NTSC</td></tr></table><h3 id="lookup-WATERMAKER_STATE">WATERMAKER_STATE
         (0 - 63)
@@ -24318,7 +24983,21 @@ The Default update rate of this PGN is autonomous, as it is dependent upon notif
         (0 - 2^7-1)
       </h3><table><tr><th>Bit</th><th>Description</th></tr><tr><td>0</td><td>Motor over temperature cutout</td></tr><tr><td>1</td><td>Motor over current cutout</td></tr><tr><td>2</td><td>Low oil level warning</td></tr><tr><td>3</td><td>Oil over temperature warning</td></tr><tr><td>4</td><td>Controller under voltage cutout</td></tr><tr><td>5</td><td>Manufacturer defined</td></tr></table><h3 id="lookupbit-TRANSMISSION_STATUS_1">TRANSMISSION_STATUS_1
         (0 - 2^7-1)
-      </h3><table><tr><th>Bit</th><th>Description</th></tr><tr><td>0</td><td>Check Transmission</td></tr><tr><td>1</td><td>Over Temperature</td></tr><tr><td>2</td><td>Low Oil Pressure</td></tr><tr><td>3</td><td>Low Oil Level</td></tr><tr><td>4</td><td>Sail Drive</td></tr></table><h3 id="lookupbit-WINDLASS_CONTROL">WINDLASS_CONTROL
+      </h3><table><tr><th>Bit</th><th>Description</th></tr><tr><td>0</td><td>Check Transmission</td></tr><tr><td>1</td><td>Over Temperature</td></tr><tr><td>2</td><td>Low Oil Pressure</td></tr><tr><td>3</td><td>Low Oil Level</td></tr><tr><td>4</td><td>Sail Drive</td></tr></table><h3 id="lookupbit-VICTRON_SWITCH_BASIC_TYPES">VICTRON_SWITCH_BASIC_TYPES
+        (0 - 2^7-1)
+      </h3><table><tr><th>Bit</th><th>Description</th></tr><tr><td>0</td><td>Momentary</td></tr><tr><td>1</td><td>Toggle</td></tr><tr><td>2</td><td>Dimming</td></tr><tr><td>5</td><td>Parallel</td></tr><tr><td>6</td><td>Temperature Setpoint</td></tr><tr><td>7</td><td>Multi-step</td></tr></table><h3 id="lookupbit-VICTRON_SWITCH_CHANNEL_CAPABILITIES">VICTRON_SWITCH_CHANNEL_CAPABILITIES
+        (0 - 2^7-1)
+      </h3><table><tr><th>Bit</th><th>Description</th></tr><tr><td>0</td><td>Has Option Labels</td></tr><tr><td>1</td><td>Has Unit</td></tr><tr><td>2</td><td>Has Measurement</td></tr><tr><td>3</td><td>Has Light Control</td></tr><tr><td>4</td><td>Has Primary Label</td></tr></table><h3 id="lookupbit-VICTRON_SWITCH_CHANNEL_STATUS">VICTRON_SWITCH_CHANNEL_STATUS
+        (0 - 2^23-1)
+      </h3><table><tr><th>Bit</th><th>Description</th></tr><tr><td>0</td><td>Port State Or Input Fault</td></tr><tr><td>1</td><td>Tripped Or Sensor Battery Low</td></tr><tr><td>2</td><td>Over Temperature</td></tr><tr><td>3</td><td>Active</td></tr><tr><td>4</td><td>Short Fault</td></tr><tr><td>5</td><td>Disabled</td></tr><tr><td>6</td><td>Bypassed</td></tr><tr><td>7</td><td>Externally Controlled</td></tr></table><h3 id="lookupbit-VICTRON_SWITCH_EXTENDED_TYPES">VICTRON_SWITCH_EXTENDED_TYPES
+        (0 - 2^23-1)
+      </h3><table><tr><th>Bit</th><th>Description</th></tr><tr><td>0</td><td>Dropdown</td></tr><tr><td>1</td><td>Basic Slider</td></tr><tr><td>2</td><td>Numeric Input</td></tr><tr><td>3</td><td>Three State Switch</td></tr><tr><td>4</td><td>Bilge Pump</td></tr><tr><td>5</td><td>RGB Light</td></tr><tr><td>6</td><td>CCT Light</td></tr><tr><td>7</td><td>RGBW Light</td></tr><tr><td>19</td><td>Input Temperature</td></tr><tr><td>20</td><td>Input With Range</td></tr><tr><td>21</td><td>Input Without Range</td></tr><tr><td>22</td><td>Input Discrete Value</td></tr></table><h3 id="lookupbit-VICTRON_SWITCH_MODULE_CAPABILITIES">VICTRON_SWITCH_MODULE_CAPABILITIES
+        (0 - 2^15-1)
+      </h3><table><tr><th>Bit</th><th>Description</th></tr><tr><td>0</td><td>Has Channel Request</td></tr><tr><td>4</td><td>Has Channel Label</td></tr><tr><td>5</td><td>Has Show On Watch</td></tr></table><h3 id="lookupbit-VICTRON_SWITCH_MODULE_STATUS">VICTRON_SWITCH_MODULE_STATUS
+        (0 - 2^15-1)
+      </h3><table><tr><th>Bit</th><th>Description</th></tr><tr><td>0</td><td>Over Temperature</td></tr><tr><td>1</td><td>Temperature Warning</td></tr><tr><td>2</td><td>Channel Fault</td></tr><tr><td>3</td><td>Channel Tripped</td></tr><tr><td>4</td><td>Under Voltage</td></tr></table><h3 id="lookupbit-VICTRON_SWITCH_REQUEST_MASK">VICTRON_SWITCH_REQUEST_MASK
+        (0 - 2^23-1)
+      </h3><table><tr><th>Bit</th><th>Description</th></tr><tr><td>0</td><td>Channel Capabilities</td></tr><tr><td>1</td><td>Channel Supported Types</td></tr><tr><td>2</td><td>Channel Mode</td></tr><tr><td>3</td><td>Channel Status</td></tr><tr><td>4</td><td>Channel Control</td></tr><tr><td>5</td><td>Channel Value</td></tr><tr><td>6</td><td>Channel Step</td></tr><tr><td>7</td><td>Channel Minimum Value</td></tr><tr><td>8</td><td>Channel Maximum Value</td></tr><tr><td>9</td><td>Channel Measurement</td></tr><tr><td>10</td><td>Channel Light Control</td></tr></table><h3 id="lookupbit-WINDLASS_CONTROL">WINDLASS_CONTROL
         (0 - 2^3-1)
       </h3><table><tr><th>Bit</th><th>Description</th></tr><tr><td>0</td><td>Another device controlling windlass</td></tr></table><h3 id="lookupbit-WINDLASS_MONITORING">WINDLASS_MONITORING
         (0 - 2^7-1)

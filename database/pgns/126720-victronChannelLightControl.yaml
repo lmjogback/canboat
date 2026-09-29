@@ -1,0 +1,54 @@
+pgn: 126720
+id: victronChannelLightControl
+description: 'Victron: Channel Light Control'
+type: Fast
+variantOrder: 117
+priority: 7
+url: https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf
+missing:
+- SampleData
+fields:
+- id: manufacturerCode
+  name: Manufacturer Code
+  type: LOOKUP
+  bits: 11
+  match: 358
+  lookup: MANUFACTURER_CODE
+- id: reserved
+  name: Reserved
+  type: RESERVED
+  bits: 2
+- id: industryCode
+  name: Industry Code
+  type: LOOKUP
+  bits: 3
+  match: 4
+  lookup: INDUSTRY_CODE
+- id: registerId
+  name: Register Id
+  type: UINT16
+  match: 57105
+  primaryKey: true
+- id: channelIndex
+  name: Channel Index
+  type: UINT8
+- id: intensity
+  name: Intensity
+  type: UINT8
+- id: red
+  name: Red
+  type: UINT8
+- id: green
+  name: Green
+  type: UINT8
+- id: blue
+  name: Blue
+  type: UINT8
+- id: whiteBrightness
+  name: White Brightness
+  type: UINT8
+- id: colorTemperature
+  name: Color Temperature
+  type: UINT16
+  unit: K
+notes: 'Source: VE.Can registers, version 23 (2026-09-04), section 1.6, page 0xDF. No capture available yet.'

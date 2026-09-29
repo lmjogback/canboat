@@ -1,0 +1,15 @@
+name: VICTRON_SWITCH_REQUEST_MASK
+kind: bit
+bits: 24
+values:
+  0: Channel Capabilities
+  1: Channel Supported Types
+  2: Channel Mode
+  3: Channel Status
+  4: Channel Control
+  5: Channel Value
+  6: Channel Step
+  7: Channel Minimum Value
+  8: Channel Maximum Value
+  9: Channel Measurement
+  10: Channel Light Control

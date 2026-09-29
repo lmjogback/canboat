@@ -1,0 +1,16 @@
+name: VICTRON_SWITCH_EXTENDED_TYPES
+kind: bit
+bits: 24
+values:
+  0: Dropdown
+  1: Basic Slider
+  2: Numeric Input
+  3: Three State Switch
+  4: Bilge Pump
+  5: RGB Light
+  6: CCT Light
+  7: RGBW Light
+  19: Input Temperature
+  20: Input With Range
+  21: Input Without Range
+  22: Input Discrete Value

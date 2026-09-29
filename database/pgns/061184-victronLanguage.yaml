@@ -1,0 +1,51 @@
+pgn: 61184
+id: victronLanguage
+description: 'Victron: Venus OS Language'
+type: Single
+variantOrder: 24
+priority: 7
+url: https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf
+fields:
+- id: manufacturerCode
+  name: Manufacturer Code
+  type: LOOKUP
+  bits: 11
+  match: 358
+  lookup: MANUFACTURER_CODE
+- id: reserved
+  name: Reserved
+  type: RESERVED
+  bits: 2
+- id: industryCode
+  name: Industry Code
+  type: LOOKUP
+  bits: 3
+  match: 4
+  lookup: INDUSTRY_CODE
+- id: registerId
+  name: Register Id
+  type: UINT16
+  match: 58338
+  primaryKey: true
+- id: language
+  name: Language
+  type: STRING_FIX
+  bits: 16
+- id: reserved6
+  name: Reserved
+  type: RESERVED
+  bits: 16
+notes: 'Source: VE.Can registers, version 23, section 1.6, Localization / Language. The PDF includes the en, zh, and nl response frames below.'
+samples:
+- raw: "2026-09-04-00:00:00.000,7,61184,226,255,8,66,99,e2,e3,65,6e,00,00"
+  expects:
+    manufacturerCode: "Victron Energy"
+    industryCode: "Marine Industry"
+    registerId: 58338
+    language: "en"
+- raw: "2026-09-04-00:00:00.000,7,61184,226,255,8,66,99,e2,e3,7a,68,00,00"
+  expects:
+    manufacturerCode: "Victron Energy"
+    industryCode: "Marine Industry"
+    registerId: 58338
+    language: "zh"

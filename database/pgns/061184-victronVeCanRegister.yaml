@@ -2,7 +2,7 @@ pgn: 61184
 id: victronVeCanRegister
 description: 'Victron: VE.Can Register'
 type: Single
-variantOrder: 4
+variantOrder: 30
 priority: 7
 missing:
 - Fields

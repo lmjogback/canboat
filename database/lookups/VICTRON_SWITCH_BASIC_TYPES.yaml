@@ -1,0 +1,10 @@
+name: VICTRON_SWITCH_BASIC_TYPES
+kind: bit
+bits: 8
+values:
+  0: Momentary
+  1: Toggle
+  2: Dimming
+  5: Parallel
+  6: Temperature Setpoint
+  7: Multi-step

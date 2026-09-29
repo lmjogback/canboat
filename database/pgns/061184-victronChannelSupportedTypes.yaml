@@ -1,0 +1,41 @@
+pgn: 61184
+id: victronChannelSupportedTypes
+description: 'Victron: Channel Supported Types'
+type: Single
+variantOrder: 9
+priority: 7
+url: https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf
+missing:
+- SampleData
+fields:
+- id: manufacturerCode
+  name: Manufacturer Code
+  type: LOOKUP
+  bits: 11
+  match: 358
+  lookup: MANUFACTURER_CODE
+- id: reserved
+  name: Reserved
+  type: RESERVED
+  bits: 2
+- id: industryCode
+  name: Industry Code
+  type: LOOKUP
+  bits: 3
+  match: 4
+  lookup: INDUSTRY_CODE
+- id: registerId
+  name: Register Id
+  type: UINT16
+  match: 57093
+  primaryKey: true
+- id: channelIndex
+  name: Channel Index
+  type: UINT8
+- id: supportedTypes
+  name: Supported Types (8-31)
+  type: BITLOOKUP
+  bits: 24
+  lookupBits: VICTRON_SWITCH_EXTENDED_TYPES
+explanation: The 24-bit field describes type indices 8-31; the low eight supported type bits are in 0xDF06.
+notes: 'Source: VE.Can registers, version 23 (2026-09-04), section 1.6, page 0xDF. No capture available yet.'

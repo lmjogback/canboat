@@ -1,0 +1,9 @@
+name: VICTRON_SWITCH_CHANNEL_CAPABILITIES
+kind: bit
+bits: 8
+values:
+  0: Has Option Labels
+  1: Has Unit
+  2: Has Measurement
+  3: Has Light Control
+  4: Has Primary Label

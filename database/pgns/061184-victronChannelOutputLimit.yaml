@@ -1,0 +1,48 @@
+pgn: 61184
+id: victronChannelOutputLimit
+description: 'Victron: Channel Output Limit'
+type: Single
+variantOrder: 23
+priority: 7
+url: https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf
+missing:
+- SampleData
+fields:
+- id: manufacturerCode
+  name: Manufacturer Code
+  type: LOOKUP
+  bits: 11
+  match: 358
+  lookup: MANUFACTURER_CODE
+- id: reserved
+  name: Reserved
+  type: RESERVED
+  bits: 2
+- id: industryCode
+  name: Industry Code
+  type: LOOKUP
+  bits: 3
+  match: 4
+  lookup: INDUSTRY_CODE
+- id: registerId
+  name: Register Id
+  type: UINT16
+  match: 57107
+  primaryKey: true
+- id: channelIndex
+  name: Channel Index
+  type: UINT8
+- id: minimum
+  name: Minimum
+  type: UNSIGNED_INTEGER
+  bits: 12
+  resolution: 0.025
+  unit: '%'
+- id: maximum
+  name: Maximum
+  type: UNSIGNED_INTEGER
+  bits: 12
+  resolution: 0.025
+  unit: '%'
+explanation: The value 0xFFF means NOP or invalid; 0-4000 represents 0-100 percent.
+notes: 'Source: VE.Can registers, version 23 (2026-09-04), section 1.6, page 0xDF. No capture available yet.'

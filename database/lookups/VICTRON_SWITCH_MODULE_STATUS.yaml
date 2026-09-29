@@ -1,0 +1,9 @@
+name: VICTRON_SWITCH_MODULE_STATUS
+kind: bit
+bits: 16
+values:
+  0: Over Temperature
+  1: Temperature Warning
+  2: Channel Fault
+  3: Channel Tripped
+  4: Under Voltage

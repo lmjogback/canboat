@@ -1,0 +1,12 @@
+name: VICTRON_SWITCH_CHANNEL_STATUS
+kind: bit
+bits: 24
+values:
+  0: Port State Or Input Fault
+  1: Tripped Or Sensor Battery Low
+  2: Over Temperature
+  3: Active
+  4: Short Fault
+  5: Disabled
+  6: Bypassed
+  7: Externally Controlled

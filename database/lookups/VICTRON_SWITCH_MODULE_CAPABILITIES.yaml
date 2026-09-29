@@ -1,0 +1,7 @@
+name: VICTRON_SWITCH_MODULE_CAPABILITIES
+kind: bit
+bits: 16
+values:
+  0: Has Channel Request
+  4: Has Channel Label
+  5: Has Show On Watch

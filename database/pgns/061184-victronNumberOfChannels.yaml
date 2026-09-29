@@ -1,0 +1,39 @@
+pgn: 61184
+id: victronNumberOfChannels
+description: 'Victron: Number of Channels'
+type: Single
+variantOrder: 6
+priority: 7
+url: https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf
+missing:
+- SampleData
+fields:
+- id: manufacturerCode
+  name: Manufacturer Code
+  type: LOOKUP
+  bits: 11
+  match: 358
+  lookup: MANUFACTURER_CODE
+- id: reserved
+  name: Reserved
+  type: RESERVED
+  bits: 2
+- id: industryCode
+  name: Industry Code
+  type: LOOKUP
+  bits: 3
+  match: 4
+  lookup: INDUSTRY_CODE
+- id: registerId
+  name: Register Id
+  type: UINT16
+  match: 57090
+  primaryKey: true
+- id: numberOfChannels
+  name: Number of Channels
+  type: UINT8
+- id: reserved5
+  name: Reserved
+  type: RESERVED
+  bits: 24
+notes: 'Source: VE.Can registers, version 23 (2026-09-04), section 1.6, page 0xDF. No capture available yet.'

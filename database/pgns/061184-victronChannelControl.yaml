@@ -1,0 +1,62 @@
+pgn: 61184
+id: victronChannelControl
+description: 'Victron: Channel Control'
+type: Single
+variantOrder: 12
+priority: 7
+url: https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf
+missing:
+- SampleData
+fields:
+- id: manufacturerCode
+  name: Manufacturer Code
+  type: LOOKUP
+  bits: 11
+  match: 358
+  lookup: MANUFACTURER_CODE
+- id: reserved
+  name: Reserved
+  type: RESERVED
+  bits: 2
+- id: industryCode
+  name: Industry Code
+  type: LOOKUP
+  bits: 3
+  match: 4
+  lookup: INDUSTRY_CODE
+- id: registerId
+  name: Register Id
+  type: UINT16
+  match: 57096
+  primaryKey: true
+- id: channelIndex
+  name: Channel Index
+  type: UINT8
+- id: pwm
+  name: PWM
+  type: UINT8
+- id: state
+  name: State
+  type: UNSIGNED_INTEGER
+  bits: 2
+- id: autoMode
+  name: Auto Mode
+  type: UNSIGNED_INTEGER
+  bits: 2
+- id: reserved7
+  name: Reserved
+  type: RESERVED
+  bits: 3
+- id: extendedValue
+  name: Extended Value
+  type: UNSIGNED_INTEGER
+  bits: 1
+- id: showUiControl
+  name: Show UI Control
+  type: UNSIGNED_INTEGER
+  bits: 5
+- id: reserved9
+  name: Reserved
+  type: RESERVED
+  bits: 3
+notes: 'Source: VE.Can registers, version 23 (2026-09-04), section 1.6, page 0xDF. No capture available yet.'

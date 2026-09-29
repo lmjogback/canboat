@@ -1,0 +1,50 @@
+pgn: 61184
+id: victronChannelMode
+description: 'Victron: Channel Mode'
+type: Single
+variantOrder: 10
+priority: 7
+url: https://www.victronenergy.com/upload/documents/VE.Can-registers-public.pdf
+missing:
+- SampleData
+fields:
+- id: manufacturerCode
+  name: Manufacturer Code
+  type: LOOKUP
+  bits: 11
+  match: 358
+  lookup: MANUFACTURER_CODE
+- id: reserved
+  name: Reserved
+  type: RESERVED
+  bits: 2
+- id: industryCode
+  name: Industry Code
+  type: LOOKUP
+  bits: 3
+  match: 4
+  lookup: INDUSTRY_CODE
+- id: registerId
+  name: Register Id
+  type: UINT16
+  match: 57094
+  primaryKey: true
+- id: channelIndex
+  name: Channel Index
+  type: UINT8
+- id: type
+  name: Type
+  type: LOOKUP
+  bits: 8
+  lookup: VICTRON_SWITCH_CHANNEL_TYPE
+- id: fuseRating
+  name: Fuse Rating
+  type: LOOKUP
+  bits: 8
+  lookup: VICTRON_SWITCH_FUSE_RATING
+- id: supportedTypes
+  name: Supported Types (0-7)
+  type: BITLOOKUP
+  bits: 8
+  lookupBits: VICTRON_SWITCH_BASIC_TYPES
+notes: 'Source: VE.Can registers, version 23 (2026-09-04), section 1.6, page 0xDF. No capture available yet.'
